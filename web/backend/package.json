@@ -1,0 +1,7 @@
+{
+  "name": "fl-rural-imaging-backend",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {"node": ">=24 <25"},
+  "dependencies": {"express": "5.2.1"}
+}

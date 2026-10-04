@@ -1,0 +1,7 @@
+{
+  "name": "fl-rural-imaging-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {"node": ">=24 <25"},
+  "dependencies": {"next": "16.3.8", "react": "19.3.0", "react-dom": "19.3.0"}
+}

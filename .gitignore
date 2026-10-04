@@ -50,6 +50,7 @@ checkpoints/
 *.ckpt
 .cache/
 research/environment-lock-*.txt
+research/mlflow.db*
 
 # OS / editors.
 .DS_Store
