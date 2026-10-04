@@ -1,0 +1,8 @@
+name: fl-rural-imaging
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11.9
+  - pip=25.1.1
+  - pip:
+      - -r requirements.txt

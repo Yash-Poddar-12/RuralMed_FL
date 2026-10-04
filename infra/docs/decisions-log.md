@@ -1,0 +1,16 @@
+# Phase 1 Decisions Log
+
+Decisions are recorded when made so later phases can trace configuration and methodology choices.
+
+| Date | Area | Decision | Justification |
+|---|---|---|---|
+| 2026-09-22 | Repository structure | Use one monorepo with separate `research/`, `web/`, and `infra/` concerns; retain the supplied `Phase_Docs/` specifications unchanged. | Shared experiment/config contracts stay versioned together while ML and dashboard code remain operationally separated. |
+| 2026-09-23 | Python source layout | Treat `research/src/` and each responsibility directory as an importable package while reserving `fl_core` and `simulation` for later phases. | Stable import boundaries support reusable Phase 1 tooling without prematurely implementing Phase 2+ logic. |
+| 2026-10-05 | Compute | Hybrid: CPU for all Phase 1 preparation on this machine; pin CUDA-enabled PyTorch/torchvision for a teammate's GPU in Phase 2. | User resolved this strategy; Phase 1 requires no GPU. |
+| 2026-10-05 | Version control | Initialize `main`, retain `dev` for integration, implement on `phase1-data-prep`; use task branches thereafter. | Section 4.3 branch strategy. Shared remote is not yet supplied. |
+| 2026-10-05 | Storage | Use the existing D: workspace for data, environment and download caches; initial free space is 114.4 GiB (C: has only 5.1 GiB). | Allows public dataset acquisition without exhausting the system drive; check free space before extraction. |
+| 2026-10-05 | CheXpert | Pending user/team registration and approved small-release download; implement an optional adapter now. | Stanford access is an external prerequisite and does not block work on public datasets. |
+| 2026-10-05 | Label taxonomy | Class IDs: 0 Normal, 1 Pneumonia, 2 COVID-19. NIH: exact No Finding -> Normal; Pneumonia, Infiltration or Consolidation -> Pneumonia; other findings excluded from primary indices but retained as metadata. CheXpert: positive Pneumonia or Consolidation -> Pneumonia; positive No Finding with no contradictory positive or uncertain target -> Normal; uncertain targets excluded individually, never imputed. COVID-QU-Ex: Normal / Non-COVID / COVID-19 map directly. | Adopt Section 6 recommendation, explicitly naming proxy findings and preserving original labels; proxy pneumonia labels are weak labels, not clinical diagnoses. |
+| 2026-10-05 | Image representation | Store lossless 224 x 224 grayscale PNGs; loader replicates to three channels and applies ImageNet mean/std on CPU. | Avoids tripling disk use while providing the input expected by later pretrained CNNs; normalization is applied once at load time. |
+| 2026-10-05 | Splits and clients | Seed 42; grouped 70/15/15 splits before partitioning; 10 clients, source preference 0.9, Dirichlet alpha 0.5, lognormal volume sigma 1.0, minimum 32 training images. Centralized test set. | Section 6/7 recommendations; group NIH/CheXpert patients and exact duplicates, preserve COVID supplied splits because patient identifiers are absent. |
+| 2026-10-05 | Tracking | Local MLflow with YAML configuration, configuration hash and dataset/partition artifacts. | Offline operation needs no account and supports later reproducible experiments. |

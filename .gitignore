@@ -1,0 +1,58 @@
+# Medical imaging data must never be committed.
+research/data/raw/*
+!research/data/raw/.gitkeep
+research/data/processed/*
+!research/data/processed/.gitkeep
+
+# Generated partition outputs and reports are reproducible artifacts.
+research/data/partitions/*
+!research/data/partitions/.gitkeep
+
+# Secrets and local configuration.
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Python.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Conda and notebooks.
+.conda/
+.ipynb_checkpoints/
+
+# Node / Next.js.
+node_modules/
+.next/
+out/
+dist/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Experiment outputs and model artifacts.
+wandb/
+mlruns/
+artifacts/
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+.cache/
+research/environment-lock-*.txt
+
+# OS / editors.
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
