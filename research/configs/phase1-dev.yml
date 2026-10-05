@@ -1,0 +1,33 @@
+schema_version: 1
+seed: 42
+data: {profile: dev, sample_images: 300}
+paths:
+  raw: research/data/raw
+  processed: research/data/processed
+  partitions: research/data/partitions
+datasets:
+  nih: {enabled: true}
+  covidqu: {enabled: true}
+  chexpert: {enabled: false, csv: train.csv, pending_registration: true}
+preprocessing:
+  image_size: 224
+  channels_on_disk: 1
+  channels_at_load: 3
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]
+  workers: 4
+split:
+  train: 0.70
+  val: 0.15
+  test: 0.15
+  preserve_covid_official: true
+partition:
+  clients: 10
+  alpha: 0.5
+  source_preference: 0.9
+  volume_sigma: 1.0
+  min_train_images: 5
+tracking:
+  uri: file:research/artifacts/mlruns
+  experiment: phase1-dev
+  artifacts: research/artifacts/mlflow-dev

@@ -7,6 +7,41 @@ research/data/processed/*
 # Generated partition outputs and reports are reproducible artifacts.
 research/data/partitions/*
 !research/data/partitions/.gitkeep
+!research/data/partitions/full/
+research/data/partitions/full/**
+!research/data/partitions/full/public/
+!research/data/partitions/full/all/
+!research/data/partitions/full/*/client_*/
+!research/data/partitions/full/*/client_*/train.csv
+!research/data/partitions/full/*/client_*/val.csv
+!research/data/partitions/full/*/splits/
+!research/data/partitions/full/*/splits/train.csv
+!research/data/partitions/full/*/splits/val.csv
+!research/data/partitions/full/*/splits/test.csv
+!research/data/partitions/full/*/assignments.csv
+!research/data/partitions/full/*/primary_index.csv
+!research/data/partitions/full/*/summary.csv
+!research/data/partitions/full/*/partition.json
+!research/data/partitions/full/*/preparation.json
+!research/data/partitions/full/*/preprocessing.json
+!research/data/partitions/full/*/split-summary.json
+!research/data/partitions/full/*/report.md
+!research/data/partitions/full/*/distribution.png
+research/data/dev_sample/
+# Medical images and archives are ignored at any storage location.
+*.png
+*.jpg
+*.jpeg
+*.dcm
+*.dicom
+*.tif
+*.tiff
+*.bmp
+*.zip
+*.tar
+*.gz
+!infra/docs/reports/**/distribution.png
+!research/data/partitions/full/*/distribution.png
 
 # Secrets and local configuration.
 .env

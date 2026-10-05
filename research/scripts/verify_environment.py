@@ -1,4 +1,6 @@
 """Import every pinned component and verify CUDA build executing on CPU."""
+import os
+os.environ["NO_ALBUMENTATIONS_UPDATE"] = "1"
 from importlib.metadata import version
 import json
 from pathlib import Path

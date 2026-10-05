@@ -1,16 +1,25 @@
 schema_version: 1
 seed: 42
+data:
+  profile: full
+  minimum_free_gib: 100
+  cohort: auto
 paths:
   raw: research/data/raw
-  processed: research/data/processed
-  partitions: research/data/partitions
+  processed: research/data/processed/full
+  partitions: research/data/partitions/full
 datasets:
   nih: {enabled: true, expected_images: 112120}
   covidqu:
     enabled: true
     expected_images: 33920
     expected_classes: {Normal: 10701, Pneumonia: 11263, COVID-19: 11956}
-  chexpert: {enabled: false, csv: train.csv, pending_registration: true}
+  chexpert:
+    enabled: true
+    csv: train.csv
+    csvs: [train.csv, valid.csv]
+    expected_images: 223648
+    pending_registration: true
 preprocessing:
   image_size: 224
   channels_on_disk: 1
@@ -30,6 +39,6 @@ partition:
   volume_sigma: 1.0
   min_train_images: 32
 tracking:
-  uri: sqlite:///research/mlflow.db
+  uri: file:research/artifacts/mlruns
   experiment: phase1-foundation
   artifacts: research/artifacts/mlflow

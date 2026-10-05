@@ -10,11 +10,20 @@ import pandas as pd
 from PIL import Image, ImageOps
 from . import adapters
 from .common import load_config, config_hash, write_json
+from .acquire import sha256
 
 
 def process_image(record, output, size):
     target = Path(output) / "images" / record["dataset"] / (record["image_id"].split(":")[1] + ".png")
     target.parent.mkdir(parents=True, exist_ok=True)
+    receipt = target.with_suffix(".verified.json")
+    raw = Path(record["raw_path"])
+    signature = {"bytes": raw.stat().st_size, "mtime_ns": raw.stat().st_mtime_ns}
+    if receipt.exists() and target.exists():
+        saved = json.loads(receipt.read_text(encoding="utf-8"))
+        if (saved["raw_stat"] == signature and saved["size"] == size
+                and saved["source"] == record and sha256(target) == saved["file_sha256"]):
+            return saved["record"]
     with Image.open(record["raw_path"]) as image:
         image.load()  # Decode completely; fail on corrupt inputs.
         gray = ImageOps.grayscale(image)
@@ -27,12 +36,15 @@ def process_image(record, output, size):
             with Image.open(target) as saved:
                 if saved.size != (size, size) or hashlib.sha256(saved.tobytes()).hexdigest() != pixel_hash:
                     raise ValueError(f"Processed image mismatch: {target}; use a fresh output directory")
-    return {**record, "processed_path": target.relative_to(output).as_posix(),
+    result = {**record, "processed_path": target.relative_to(output).as_posix(),
             "raw_pixel_sha256": raw_hash, "pixel_sha256": pixel_hash,
             "width": size, "height": size}
+    write_json(receipt, {"raw_stat": signature, "size": size, "source": record,
+                         "file_sha256": sha256(target), "record": result})
+    return result
 
 
-def run(config):
+def run(config, records_override=None):
     root = Path(config["paths"]["raw"])
     output = Path(config["paths"]["processed"])
     output.mkdir(parents=True, exist_ok=True)
@@ -40,7 +52,7 @@ def run(config):
     if previous.exists() and json.loads(previous.read_text())["config_hash"] != config_hash(config):
         raise ValueError("Configuration changed; choose a fresh processed output directory")
     records, inventories = [], {}
-    for name, settings in config["datasets"].items():
+    for name, settings in config["datasets"].items() if records_override is None else []:
         if not settings["enabled"]:
             continue
         dataset_root = root / settings.get("directory", name)
@@ -53,7 +65,9 @@ def run(config):
                     raise ValueError("Representative input lacks CRC verification")
             elif not receipt.exists():
                 raise ValueError(f"{name}: acquisition verification receipt missing")
-        iterator = getattr(adapters, name)(dataset_root / "extracted") if name != "chexpert" else adapters.chexpert(dataset_root, settings["csv"])
+        iterator = (getattr(adapters, name)(dataset_root / "extracted") if name != "chexpert"
+                    else (row for csv_name in settings.get("csvs", [settings["csv"]])
+                          for row in adapters.chexpert(dataset_root, csv_name)))
         rows = list(iterator)
         if settings.get("expected_images") and len(rows) != settings["expected_images"]:
             raise ValueError(f"{name}: expected {settings['expected_images']} images, found {len(rows)}")
@@ -62,6 +76,11 @@ def run(config):
             raise ValueError(f"{name}: class inventory mismatch {counts}")
         inventories[name] = {"images": len(rows), "classes": counts}
         records.extend(rows)
+    if records_override is not None:
+        records = records_override
+        for name in sorted({r["dataset"] for r in records}):
+            rows = [r for r in records if r["dataset"] == name]
+            inventories[name] = {"images": len(rows), "classes": dict(Counter(r["label_name"] for r in rows))}
     if not records:
         raise ValueError("No enabled data")
     processed = []
@@ -73,6 +92,7 @@ def run(config):
     manifest = pd.DataFrame(processed).sort_values("image_id")
     manifest.to_csv(output / "manifest.csv", index=False)
     summary = {"config_hash": config_hash(config), "inventories": inventories,
+               "profile": config.get("data", {}).get("profile", "full"),
                "representative_only": any(s.get("representative_only", False) for s in config["datasets"].values()),
                "images_decoded": len(manifest), "primary_images": int((manifest.label >= 0).sum()),
                "excluded_images": int((manifest.label < 0).sum()),

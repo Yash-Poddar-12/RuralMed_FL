@@ -96,4 +96,5 @@ def chexpert(root, csv_name="train.csv"):
             label, reason = chexpert_label(row)
             if row.get("Frontal/Lateral", "Frontal") != "Frontal":
                 label, reason = -1, "lateral_view"
-            yield record("chexpert", path, relative.as_posix(), "chexpert:" + patient, row, label, reason)
+            yield record("chexpert", path, relative.as_posix(), "chexpert:" + patient, row, label, reason,
+                         official="test" if csv_name == "valid.csv" else "")

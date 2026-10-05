@@ -2,15 +2,15 @@
 import argparse
 import json
 from pathlib import Path
-import mlflow
 from .common import load_config, config_hash
 from .preprocess import run as preprocess
 from .split import run as split
 from research.src.partitioning.partition import run as partition
 
 
-def run(config_path):
-    config = load_config(config_path)
+def run(config_path, config=None):
+    import mlflow
+    config = config or load_config(config_path)
     tracking = config["tracking"]
     mlflow.set_tracking_uri(tracking["uri"])
     if mlflow.get_experiment_by_name(tracking["experiment"]) is None:
@@ -21,10 +21,18 @@ def run(config_path):
     with mlflow.start_run(run_name="phase1-" + config_hash(config)[:12]) as active:
         mlflow.set_tags({"phase": "1", "device": "cpu", "config_hash": config_hash(config)})
         mlflow.log_artifact(str(config_path), "configuration")
+        mlflow.log_dict(config, "configuration/resolved.json")
         mlflow.log_params({"seed": config["seed"], **config["partition"]})
-        preprocess(config)
-        data = split(config)
-        result = partition(config)
+        if config["data"]["profile"] == "dev":
+            from .prepare import dev_sample
+            import pandas as pd
+            dev_sample(config)
+            data = pd.read_csv(Path(config["paths"]["processed"]) / "primary_manifest.csv")
+            result = json.loads((Path(config["paths"]["partitions"]) / "partition.json").read_text())
+        else:
+            preprocess(config)
+            data = split(config)
+            result = partition(config)
         mlflow.log_metrics({"primary_images": len(data), "train_images": result["train_images"],
                             "centralized_test_images": result["test_images_centralized"],
                             "smallest_client": result["min_client_train"]})
