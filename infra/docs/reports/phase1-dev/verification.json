@@ -1,0 +1,55 @@
+{
+  "profile": "dev",
+  "config_hash": "86f1f124357faa4b48a40efd51843decdfab37c31a60b1b719a96b0a96483669",
+  "images": 300,
+  "bytes": 8531299,
+  "classes": {
+    "Normal": 100,
+    "Pneumonia": 100,
+    "COVID-19": 100
+  },
+  "source_classes": {
+    "covidqu/Normal": 50,
+    "nih/Normal": 50,
+    "covidqu/Pneumonia": 50,
+    "nih/Pneumonia": 50,
+    "covidqu/COVID-19": 100
+  },
+  "missing_sources": [
+    "chexpert"
+  ],
+  "selection": "seeded class/source strata from existing inputs only; not an evaluation cohort",
+  "validation": {
+    "offline_tests": "17 passed in 16.17s; host Python 3.12 / torch 2.5.1 CPU",
+    "client_00_cpu_loaded": 27,
+    "visual_review": "class/source skew and clinic volumes inspected",
+    "environment": {
+      "python": "3.11.9",
+      "cuda_build": "12.6",
+      "cuda_available": true,
+      "cpu_tensor_operations": "passed",
+      "torchvision_native_cpu_ops": "passed",
+      "versions": {
+        "torch": "2.7.1+cu126",
+        "torchvision": "0.22.1+cu126",
+        "flwr": "1.17.0",
+        "numpy": "2.1.3",
+        "pandas": "2.2.3",
+        "scikit-learn": "1.6.1",
+        "matplotlib": "3.10.1",
+        "seaborn": "0.13.2",
+        "Pillow": "11.1.0",
+        "PyYAML": "6.0.2",
+        "albumentations": "2.0.5",
+        "mlflow": "2.22.0",
+        "requests": "2.32.3"
+      }
+    },
+    "mlflow": {
+      "run_id": "356b24714a70458c8dfdeb5a1ca13209",
+      "experiment_id": "539086029751257199",
+      "config_hash": "86f1f124357faa4b48a40efd51843decdfab37c31a60b1b719a96b0a96483669"
+    },
+    "full_data_run": "not run on this laptop; handed to teammate"
+  }
+}
