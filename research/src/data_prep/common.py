@@ -38,7 +38,7 @@ def load_config(path, profile=None):
         if data.get("cohort") == "auto":
             settings = config["datasets"]["chexpert"]
             candidates = [base / "raw/chexpert", base / "raw/chexpert/CheXpert-v1.0-small",
-                          base / "raw/chexpert/extracted/CheXpert-v1.0-small"]
+                          base / "raw/chexpert/extracted/CheXpert-v1.0-small", base / "raw/chexpert/extracted"]
             chex = next((p for p in candidates if (p / settings["csv"]).is_file()), None)
             settings["enabled"] = chex is not None
             if chex:

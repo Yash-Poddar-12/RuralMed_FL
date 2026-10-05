@@ -5,13 +5,14 @@ import csv
 import json
 from pathlib import Path
 import shutil
+import zipfile
 
 import numpy as np
 import pandas as pd
 from PIL import Image
 
 from . import adapters
-from .acquire import acquire, disk_preflight, sha256
+from .acquire import acquire, disk_preflight, sha256, extract_verified, verified_extraction
 from .common import CLASSES, REPO_ROOT, config_hash, load_config, write_json
 from .preprocess import run as preprocess
 from .split import run as split
@@ -55,7 +56,7 @@ def dev_sample(config, source_root=None):
         if source == "nih" and not (folder / "extracted").exists():
             folder = raw / "nih-representative"
         if source == "chexpert":
-            candidates = [folder, folder / "CheXpert-v1.0-small", folder / "extracted/CheXpert-v1.0-small"]
+            candidates = [folder, folder / "CheXpert-v1.0-small", folder / "extracted/CheXpert-v1.0-small", folder / "extracted"]
             folder = next((p for p in candidates if (p / "train.csv").is_file()), folder)
             if not (folder / "train.csv").is_file():
                 missing.append(source)
@@ -142,6 +143,25 @@ def verify_chexpert(config):
             "checksum_origin": "local receipt; no publisher signature"}
 
 
+def unpack_chexpert(archive, folder, delete_archives=False):
+    """Only unpack an already approved local ZIP; never acquire CheXpert."""
+    archive, folder = Path(archive).resolve(), Path(folder).resolve()
+    if not archive.is_file():
+        raise RuntimeError(f"Approved CheXpert archive not found: {archive}")
+    folder.mkdir(parents=True, exist_ok=True)
+    digest = sha256(archive)
+    prior = folder / "acquisition.json"
+    if prior.exists() and json.loads(prior.read_text())["sha256"] != digest:
+        raise ValueError("CheXpert archive changed; use a fresh data root")
+    if not verified_extraction(folder):
+        count = extract_verified(archive, folder)
+        write_json(prior, {"dataset": "chexpert-small", "sha256": digest,
+                           "members_crc_verified": count,
+                           "inventory_sha256": sha256(folder / "extracted-files.csv")})
+    if delete_archives and archive.is_relative_to(folder):
+        archive.unlink()
+
+
 def export_outputs(config, receipts):
     processed = Path(config["paths"]["processed"])
     output = Path(config["paths"]["partitions"])
@@ -164,7 +184,7 @@ def export_outputs(config, receipts):
     return summary
 
 
-def prepare_full(config, config_path, delete_archives=False, no_download=False, tracking=True):
+def prepare_full(config, config_path, delete_archives=False, no_download=False, tracking=True, chexpert_archive=None):
     # Mandatory gate precedes network requests. Existing data count towards the
     # 100 GiB working allocation so an interrupted download can resume unchanged.
     if not no_download:
@@ -172,6 +192,11 @@ def prepare_full(config, config_path, delete_archives=False, no_download=False, 
                        for p in Path(config["paths"][key]).rglob("*") if p.is_file())
         remaining = max(5, config["data"]["minimum_free_gib"] - existing / 1024**3)
         disk_preflight(Path(config["paths"]["raw"]).parent, remaining)
+    chex_folder = Path(config["paths"]["raw"]) / "chexpert"
+    local_archive = Path(chexpert_archive) if chexpert_archive else chex_folder / "CheXpert-v1.0-small.zip"
+    if chexpert_archive or local_archive.is_file():
+        unpack_chexpert(local_archive, chex_folder, delete_archives)
+        config = load_config(config_path, profile="full")
     receipts = {"chexpert": verify_chexpert(config)}
     for source in ("nih", "covidqu"):
         receipts[source] = acquire(source, config["paths"]["raw"], delete_archives=delete_archives, allow_download=not no_download)
@@ -190,6 +215,7 @@ def main():
     parser.add_argument("--profile", choices=["dev", "full"])
     parser.add_argument("--config", type=Path)
     parser.add_argument("--source-root", type=Path, help="Existing raw root for dev sampling only")
+    parser.add_argument("--chexpert-archive", type=Path, help="Approved local CheXpert-small ZIP; never downloaded by this CLI")
     parser.add_argument("--delete-archives", action="store_true", help="Delete public ZIPs after checksum/CRC-verified extraction")
     parser.add_argument("--no-download", action="store_true", help="Use only verified existing extractions/archives")
     parser.add_argument("--no-tracking", action="store_true", help="Skip MLflow connection (leaves that Phase 1 gate pending)")
@@ -203,7 +229,8 @@ def main():
         else:
             if args.source_root:
                 parser.error("--source-root is for dev sampling only; set RURALMED_DATA_ROOT for full data")
-            result = prepare_full(config, config_path, args.delete_archives, args.no_download, not args.no_tracking)
-            print(f"Preparation complete ({result['cohort']}); outputs: {config['paths']['partitions']}")
-    except (OSError, RuntimeError, ValueError) as exc:
+            result = prepare_full(config, config_path, args.delete_archives, args.no_download, not args.no_tracking, args.chexpert_archive)
+            destination = Path(config["paths"]["partitions"]).parent / result["cohort"]
+            print(f"Preparation complete ({result['cohort']}); outputs: {destination}")
+    except (OSError, RuntimeError, ValueError, zipfile.BadZipFile) as exc:
         parser.exit(1, f"Data preparation stopped: {exc}\nRerun the same command to resume after resolving the cause.\n")

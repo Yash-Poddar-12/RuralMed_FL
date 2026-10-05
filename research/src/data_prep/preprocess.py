@@ -30,12 +30,17 @@ def process_image(record, output, size):
         raw_hash = hashlib.sha256(str(gray.size).encode() + gray.tobytes()).hexdigest()
         gray = gray.resize((size, size), Image.Resampling.BILINEAR)
         pixel_hash = hashlib.sha256(gray.tobytes()).hexdigest()
-        if not target.exists():
-            gray.save(target, compress_level=1)
-        else:
-            with Image.open(target) as saved:
-                if saved.size != (size, size) or hashlib.sha256(saved.tobytes()).hexdigest() != pixel_hash:
-                    raise ValueError(f"Processed image mismatch: {target}; use a fresh output directory")
+        verified = False
+        if target.exists():
+            try:
+                with Image.open(target) as saved:
+                    verified = saved.size == (size, size) and hashlib.sha256(saved.tobytes()).hexdigest() == pixel_hash
+            except OSError:
+                pass
+        if not verified:
+            temporary = target.with_name(target.name + ".part")
+            gray.save(temporary, format="PNG", compress_level=1)
+            temporary.replace(target)
     result = {**record, "processed_path": target.relative_to(output).as_posix(),
             "raw_pixel_sha256": raw_hash, "pixel_sha256": pixel_hash,
             "width": size, "height": size}

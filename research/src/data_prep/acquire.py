@@ -11,6 +11,7 @@ from pathlib import Path
 import shutil
 import time
 import urllib.request
+import urllib.error
 import zipfile
 import zlib
 
@@ -69,7 +70,11 @@ def download(url, archive):
                     raise RuntimeError("Incomplete download; rerun to resume")
             partial.replace(archive)
             return
-        except (OSError, RuntimeError):
+        except (OSError, RuntimeError) as exc:
+            if (isinstance(exc, urllib.error.HTTPError) and exc.code == 416
+                    and exc.headers.get("Content-Range") == f"bytes */{offset}" and offset):
+                partial.replace(archive)
+                return
             if attempt == 5:
                 raise
             time.sleep(2)
