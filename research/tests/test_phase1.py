@@ -29,17 +29,18 @@ def test_harmonization():
 @pytest.fixture(scope="module")
 def prepared(tmp_path_factory):
     root = tmp_path_factory.mktemp("phase1")
-    config = load_config("research/configs/phase1.yml")
+    config = load_config("research/configs/phase1-dev.yml")
     config["paths"] = {"raw": str(root / "raw"), "processed": str(root / "processed"), "partitions": str(root / "partitions")}
     config["preprocessing"]["workers"] = 4
-    config["datasets"]["nih"]["expected_images"] = 600
-    config["datasets"]["covidqu"]["expected_images"] = 900
-    config["datasets"]["covidqu"]["expected_classes"] = {"Normal": 300, "Pneumonia": 300, "COVID-19": 300}
+    config["datasets"]["nih"]["expected_images"] = 120
+    config["datasets"]["covidqu"]["expected_images"] = 180
+    config["datasets"]["covidqu"]["expected_classes"] = {"Normal": 60, "Pneumonia": 60, "COVID-19": 60}
+    config["datasets"]["chexpert"].update(enabled=True, expected_images=60)
     rng = np.random.default_rng(2026)
     rows = []
     nih_root = root / "raw" / "nih" / "extracted"
     nih_root.mkdir(parents=True)
-    for i in range(600):
+    for i in range(120):
         name = f"{i:08d}.png"
         Image.fromarray(rng.integers(0, 256, (24, 24), dtype=np.uint8)).save(nih_root / name)
         rows.append({"Image Index": name, "Patient ID": str(i // 3), "Finding Labels": "No Finding" if i // 3 % 2 else "Infiltration"})
@@ -49,11 +50,24 @@ def prepared(tmp_path_factory):
         writer.writerows(rows)
     covid_root = root / "raw" / "covidqu" / "extracted" / "Lung Segmentation Data" / "Lung Segmentation Data"
     for cls in ["Normal", "Non-COVID", "COVID-19"]:
-        for i in range(300):
-            split_name = "Train" if i < 210 else "Val" if i < 255 else "Test"
+        for i in range(60):
+            split_name = "Train" if i < 42 else "Val" if i < 51 else "Test"
             folder = covid_root / split_name / cls / "images"
             folder.mkdir(parents=True, exist_ok=True)
             Image.fromarray(rng.integers(0, 256, (24, 24), dtype=np.uint8)).save(folder / f"{i}.png")
+    chex_root = root / "raw/chexpert"
+    chex_rows = []
+    for i in range(60):
+        relative = f"train/patient{i:05d}/study1/view1_frontal.jpg"
+        path = chex_root / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        Image.fromarray(rng.integers(0, 256, (24, 24), dtype=np.uint8)).save(path)
+        chex_rows.append({"Path": "CheXpert-v1.0-small/" + relative, "Frontal/Lateral": "Frontal",
+                          "Pneumonia": str(i % 2), "No Finding": str(1 - i % 2)})
+    with (chex_root / "train.csv").open("w", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=list(chex_rows[0]))
+        writer.writeheader()
+        writer.writerows(chex_rows)
     # Acquisition receipts are fixture placeholders, never presented as real data.
     for name in ["nih", "covidqu"]:
         (root / "raw" / name / "acquisition.json").write_text('{"test_fixture":true}')
@@ -73,7 +87,7 @@ def test_group_isolation_and_coverage(prepared):
     assert set(assignments.image_id) == set(data[data.split != "test"].image_id)
     assert not set(assignments.image_id) & set(data[data.split == "test"].image_id)
     assert assignments.groupby("group_id").client.nunique().max() == 1
-    assert report["min_client_train"] >= 32
+    assert report["min_client_train"] >= config["partition"]["min_train_images"]
     assert report["volume_ratio"] > 2
 
 
@@ -111,7 +125,7 @@ def test_inventory_mismatch(prepared):
 
 
 def test_duplicate_anchor_through_excluded_image(tmp_path):
-    config = load_config("research/configs/phase1.yml")
+    config = load_config("research/configs/phase1-dev.yml")
     config["paths"]["processed"] = str(tmp_path)
     rows = [
         {"image_id": "nih:excluded", "patient_id": "nih:1", "dataset": "nih", "label": -1, "label_name": "Excluded", "pixel_sha256": "shared", "official_split": ""},
