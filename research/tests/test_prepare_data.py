@@ -26,6 +26,9 @@ def test_preflight_before_network(tmp_path, monkeypatch):
     monkeypatch.setattr(acquisition.urllib.request, "urlopen", forbidden)
     with pytest.raises(RuntimeError, match="before downloading"):
         prepare.prepare_full(config, "unused.yml")
+    monkeypatch.setattr(acquisition.shutil, "disk_usage", lambda _: SimpleNamespace(free=110 * 1024**3))
+    with pytest.raises(RuntimeError, match="125.0 GiB"):
+        prepare.prepare_full(config, "unused.yml", delete_archives=False)
 
 
 def test_extract_resume_delete_and_corruption(tmp_path, monkeypatch):
@@ -75,6 +78,9 @@ def test_data_root_and_hash_are_portable(tmp_path, monkeypatch):
     assert config_hash(first) == config_hash(second)
     dev = load_config(REPO_ROOT / "research/configs/phase1-dev.yml")
     assert "dev_sample" in dev["paths"]["processed"]
+    switched = load_config(REPO_ROOT / "research/configs/phase1.yml", profile="dev")
+    assert switched["data"]["sample_images"] == 300
+    assert switched["paths"] == dev["paths"]
 
 
 def test_missing_chexpert_is_explicit(capsys):

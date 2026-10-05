@@ -185,12 +185,19 @@ def export_outputs(config, receipts):
 
 
 def prepare_full(config, config_path, delete_archives=False, no_download=False, tracking=True, chexpert_archive=None):
-    # Mandatory gate precedes network requests. Existing data count towards the
-    # 100 GiB working allocation so an interrupted download can resume unchanged.
+    # Only allocations reused by this command count towards the budget. Legacy
+    # pilot directories or segmented transfers cannot reduce the storage gate.
     if not no_download:
-        existing = sum(p.stat().st_size for key in ("raw", "processed")
-                       for p in Path(config["paths"][key]).rglob("*") if p.is_file())
-        remaining = max(5, config["data"]["minimum_free_gib"] - existing / 1024**3)
+        raw = Path(config["paths"]["raw"])
+        reused = [Path(config["paths"]["processed"]), raw / "chexpert"]
+        for name, version in (("nih", 3), ("covidqu", 7)):
+            reused.extend([raw / name / "extracted", raw / name / f"version-{version}.zip",
+                           raw / name / f"version-{version}.zip.part"])
+        existing = sum(path.stat().st_size if path.is_file() else
+                       sum(p.stat().st_size for p in path.rglob("*") if p.is_file())
+                       for path in reused)
+        budget = max(config["data"]["minimum_free_gib"], 100 if delete_archives else 125)
+        remaining = max(5, budget - existing / 1024**3)
         disk_preflight(Path(config["paths"]["raw"]).parent, remaining)
     chex_folder = Path(config["paths"]["raw"]) / "chexpert"
     local_archive = Path(chexpert_archive) if chexpert_archive else chex_folder / "CheXpert-v1.0-small.zip"
@@ -216,7 +223,7 @@ def main():
     parser.add_argument("--config", type=Path)
     parser.add_argument("--source-root", type=Path, help="Existing raw root for dev sampling only")
     parser.add_argument("--chexpert-archive", type=Path, help="Approved local CheXpert-small ZIP; never downloaded by this CLI")
-    parser.add_argument("--delete-archives", action="store_true", help="Delete public ZIPs after checksum/CRC-verified extraction")
+    parser.add_argument("--delete-archives", action="store_true", help="Delete ZIPs inside the managed data root after verified extraction")
     parser.add_argument("--no-download", action="store_true", help="Use only verified existing extractions/archives")
     parser.add_argument("--no-tracking", action="store_true", help="Skip MLflow connection (leaves that Phase 1 gate pending)")
     args = parser.parse_args()

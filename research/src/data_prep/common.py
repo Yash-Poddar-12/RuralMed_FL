@@ -25,6 +25,7 @@ def load_config(path, profile=None):
     if data["profile"] not in {"dev", "full"}:
         raise ValueError("data.profile must be dev or full")
     if data["profile"] == "dev":
+        data.setdefault("sample_images", 300)
         base = REPO_ROOT / "research/data/dev_sample"
         config["paths"] = {"raw": str(base / "raw"), "processed": str(base / "processed"),
                            "partitions": str(base / "partitions")}
