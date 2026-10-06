@@ -1,3 +1,6 @@
+# Top-level data root (teammate's RURALMED_DATA_ROOT inside the repo).
+data/
+
 # Medical imaging data must never be committed.
 research/data/raw/*
 !research/data/raw/.gitkeep
