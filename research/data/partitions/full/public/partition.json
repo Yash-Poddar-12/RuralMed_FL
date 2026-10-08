@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "config_hash": "54ae8a87cf7cb86dc4b6aa877caf9da817c97a2cfb5faf4562e9e591a4120e1f",
+  "parameters": {
+    "clients": 10,
+    "alpha": 0.5,
+    "source_preference": 0.9,
+    "volume_sigma": 1.0,
+    "min_train_images": 32
+  },
+  "sources": [
+    "covidqu",
+    "nih"
+  ],
+  "clients": 10,
+  "train_images": 81528,
+  "val_images": 17809,
+  "test_images_centralized": 19004,
+  "min_client_train": 1150,
+  "max_client_train": 20722,
+  "volume_ratio": 18.01913043478261,
+  "source_primary": [
+    "covidqu",
+    "nih",
+    "covidqu",
+    "nih",
+    "covidqu",
+    "nih",
+    "covidqu",
+    "nih",
+    "covidqu",
+    "nih"
+  ],
+  "zero_client_overlap": true,
+  "complete_coverage": true,
+  "patient_groups_intact": true
+}

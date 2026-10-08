@@ -1,0 +1,33 @@
+{
+  "profile": "full",
+  "cohort": "public",
+  "config_hash": "54ae8a87cf7cb86dc4b6aa877caf9da817c97a2cfb5faf4562e9e591a4120e1f",
+  "sources": {
+    "chexpert": {
+      "status": "pending_registration_or_files"
+    },
+    "nih": {
+      "dataset": "nih",
+      "ref": "nih-chest-xrays/data",
+      "version": 3,
+      "sha256": "5e9ee832f1c790373df187c6f754f64fed619e489b0b4938262b14d01314383e",
+      "archive_bytes": 45096150231,
+      "members_crc_verified": 112128,
+      "inventory_sha256": "31fcee9ebf5d61675311bf58fd627d4dbbf71e21fe29c2af7a2e8e6c50c2e3ad",
+      "verified_at": "2026-10-08T09:43:49.888108+00:00"
+    },
+    "covidqu": {
+      "dataset": "covidqu",
+      "ref": "anasmohammedtahir/covidqu",
+      "version": 7,
+      "sha256": "2a91b372cdd104d05d472f79dc446dc9bb7e3ccc26f513cf971f64cabc151333",
+      "archive_bytes": 1236955718,
+      "members_crc_verified": 85319,
+      "inventory_sha256": "614c6543c60d82e77eba68f42a1789dd5b48a0769b15addb9430db493da64f6c",
+      "verified_at": "2026-10-08T10:17:01.209330+00:00"
+    }
+  },
+  "images": 118341,
+  "chexpert_pending": true,
+  "paths": "Image paths are relative to the processed root; configure RURALMED_DATA_ROOT on each machine."
+}
