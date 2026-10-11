@@ -1,0 +1,104 @@
+{
+  "primary_unique_images": 118341,
+  "conflicting_duplicate_rows_excluded": 10,
+  "duplicates_removed": 14,
+  "group_stratification": [
+    true,
+    true
+  ],
+  "counts": [
+    {
+      "dataset": "covidqu",
+      "split": "test",
+      "label_name": "COVID-19",
+      "images": 2395
+    },
+    {
+      "dataset": "covidqu",
+      "split": "test",
+      "label_name": "Normal",
+      "images": 2140
+    },
+    {
+      "dataset": "covidqu",
+      "split": "test",
+      "label_name": "Pneumonia",
+      "images": 2253
+    },
+    {
+      "dataset": "covidqu",
+      "split": "train",
+      "label_name": "COVID-19",
+      "images": 7657
+    },
+    {
+      "dataset": "covidqu",
+      "split": "train",
+      "label_name": "Normal",
+      "images": 6849
+    },
+    {
+      "dataset": "covidqu",
+      "split": "train",
+      "label_name": "Pneumonia",
+      "images": 7208
+    },
+    {
+      "dataset": "covidqu",
+      "split": "val",
+      "label_name": "COVID-19",
+      "images": 1902
+    },
+    {
+      "dataset": "covidqu",
+      "split": "val",
+      "label_name": "Normal",
+      "images": 1712
+    },
+    {
+      "dataset": "covidqu",
+      "split": "val",
+      "label_name": "Pneumonia",
+      "images": 1802
+    },
+    {
+      "dataset": "nih",
+      "split": "test",
+      "label_name": "Normal",
+      "images": 8883
+    },
+    {
+      "dataset": "nih",
+      "split": "test",
+      "label_name": "Pneumonia",
+      "images": 3333
+    },
+    {
+      "dataset": "nih",
+      "split": "train",
+      "label_name": "Normal",
+      "images": 42554
+    },
+    {
+      "dataset": "nih",
+      "split": "train",
+      "label_name": "Pneumonia",
+      "images": 17260
+    },
+    {
+      "dataset": "nih",
+      "split": "val",
+      "label_name": "Normal",
+      "images": 8909
+    },
+    {
+      "dataset": "nih",
+      "split": "val",
+      "label_name": "Pneumonia",
+      "images": 3484
+    }
+  ],
+  "patient_leakage": 0,
+  "exact_processed_pixel_leakage": 0,
+  "limitation": "COVID-QU-Ex has no patient IDs; preserve supplied splits, but unseen patient overlap and near-duplicates cannot be ruled out."
+}

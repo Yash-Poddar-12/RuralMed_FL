@@ -1,0 +1,29 @@
+{
+  "config_hash": "54ae8a87cf7cb86dc4b6aa877caf9da817c97a2cfb5faf4562e9e591a4120e1f",
+  "inventories": {
+    "nih": {
+      "images": 112120,
+      "classes": {
+        "Excluded": 27675,
+        "Normal": 60361,
+        "Pneumonia": 24084
+      }
+    },
+    "covidqu": {
+      "images": 33920,
+      "classes": {
+        "COVID-19": 11956,
+        "Pneumonia": 11263,
+        "Normal": 10701
+      }
+    }
+  },
+  "profile": "full",
+  "representative_only": false,
+  "images_decoded": 146040,
+  "primary_images": 118365,
+  "excluded_images": 27675,
+  "duplicate_processed_pixels": 28,
+  "missing_patient_ids": 33920,
+  "normalization": "ImageNet at load time; grayscale replicated to RGB"
+}
