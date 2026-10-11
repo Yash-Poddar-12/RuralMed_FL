@@ -65,9 +65,9 @@ def _resolve_paths(cfg2: dict, cfg1: dict) -> tuple[str, Path]:
     return processed_root, partitions_root
 
 
-def _print_system_info() -> None:
+def _print_system_info(title: str = "Phase 2 — FedAvg Baseline") -> None:
     print("=" * 70, flush=True)
-    print("Phase 2 — FedAvg Baseline", flush=True)
+    print(title, flush=True)
     print(f"  PyTorch  : {torch.__version__}", flush=True)
     print(f"  CUDA     : {torch.version.cuda}", flush=True)
     print(f"  Device   : {torch.cuda.get_device_name(0)}", flush=True)
@@ -106,7 +106,37 @@ def main() -> None:
 
     torch.manual_seed(seed)
 
-    _print_system_info()
+    # ── Check compression mode ────────────────────────────────────────────────
+    comp_cfg = cfg2.get("compression", {})
+    is_compressed = comp_cfg.get("enabled", False)
+    if is_compressed:
+        comp_method = str(comp_cfg.get("method", "topk")).lower()
+        if comp_method == "topk":
+            ratio = float(comp_cfg.get("topk_ratio", 0.05))
+            comp_title = f"Phase 3 — Compressed FedAvg (Top-{ratio*100:.1f}%)"
+            run_tag = f"topk_{int(ratio*100)}pct_seed{seed}"
+        else:
+            bits = int(comp_cfg.get("quant_bits", 8))
+            comp_title = f"Phase 3 — Compressed FedAvg (QSGD-{bits}bit)"
+            run_tag = f"qsgd_{bits}bit_seed{seed}"
+        phase_dir = "phase3"
+        tags = {"phase": "3", "algorithm": f"FedAvg+{comp_method}", "backbone": "DenseNet-121"}
+
+        # Clear residual files for fresh run
+        res_dir = REPO_ROOT / "research/artifacts/phase3/residuals"
+        if res_dir.exists():
+            for p in res_dir.glob("*.pt"):
+                try:
+                    p.unlink()
+                except Exception:
+                    pass
+    else:
+        comp_title = "Phase 2 — FedAvg Baseline"
+        run_tag = f"seed{seed}"
+        phase_dir = "phase2"
+        tags = {"phase": "2", "algorithm": "FedAvg", "backbone": "DenseNet-121"}
+
+    _print_system_info(title=comp_title)
     print(f"\nSeed: {seed}  |  Rounds: {NUM_ROUNDS}  |  Clients: {NUM_CLIENTS}", flush=True)
 
     # ── Resolve paths ─────────────────────────────────────────────────────────
@@ -149,7 +179,7 @@ def main() -> None:
     print(
         f"Expected total over {NUM_ROUNDS} rounds: "
         f"{2 * NUM_CLIENTS * param_bytes * NUM_ROUNDS / 1e9:.1f} GB  "
-        f"(Phase 3 compression target)",
+        f"(uncompressed baseline)",
         flush=True,
     )
 
@@ -161,11 +191,11 @@ def main() -> None:
         mlflow.set_tracking_uri(tracking_uri)
         mlflow.set_experiment(tracking_cfg["experiment"])
         run = mlflow.start_run(
-            run_name=f"fedavg_seed{seed}",
-            tags={"phase": "2", "algorithm": "FedAvg", "backbone": "DenseNet-121"},
+            run_name=f"fedavg_{run_tag}",
+            tags=tags,
         )
         mlflow_run_id = run.info.run_id
-        mlflow.log_params({
+        log_params_dict = {
             "seed": seed,
             "rounds": NUM_ROUNDS,
             "clients": NUM_CLIENTS,
@@ -180,7 +210,10 @@ def main() -> None:
             "dropout": model_cfg["dropout"],
             "class_weights": str(cfg2["data"]["class_weights"]),
             "param_bytes": param_bytes,
-        })
+        }
+        if is_compressed:
+            log_params_dict.update({f"comp_{k}": v for k, v in comp_cfg.items()})
+        mlflow.log_params(log_params_dict)
         print(f"\nMLflow run ID: {mlflow_run_id}", flush=True)
 
     # ── Evaluate function (centralized test set) ──────────────────────────────
@@ -255,13 +288,15 @@ def main() -> None:
 
     # ── Final summary ─────────────────────────────────────────────────────────
     comms = tracker.summary()
-    comms_log_path = REPO_ROOT / f"research/artifacts/phase2/comms_seed{seed}.json"
+    comms_log_path = REPO_ROOT / f"research/artifacts/{phase_dir}/comms_{run_tag}.json"
     tracker.save(comms_log_path)
+
+    ratio_str = f"({comms.get('comms/compression_ratio', 1.0):.1f}x compression)" if is_compressed else "(uncompressed baseline)"
 
     print("\n" + "=" * 70, flush=True)
     print("Simulation complete", flush=True)
     print(f"  Wall time        : {elapsed/3600:.2f} h  ({elapsed/60:.1f} min)", flush=True)
-    print(f"  Total comms      : {comms.get('comms/total_gb', 0):.2f} GB  (uncompressed baseline)", flush=True)
+    print(f"  Total comms      : {comms.get('comms/total_gb', 0):.2f} GB  {ratio_str}", flush=True)
     print(f"  Comms log        : {comms_log_path}", flush=True)
 
     if history.metrics_centralized:
@@ -281,10 +316,6 @@ def main() -> None:
         mlflow.end_run()
         print(f"\n  MLflow run      : {mlflow_run_id}", flush=True)
 
-    print(
-        "\n  Record these numbers in infra/docs/decisions-log.md as the Phase 2 baseline.",
-        flush=True,
-    )
     print("=" * 70, flush=True)
 
 

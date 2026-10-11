@@ -1,0 +1,52 @@
+schema_version: 1
+seed: 42
+experiment: phase3-compression
+
+# -- Model -------------------------------------------------------------------
+model:
+  architecture: densenet121
+  pretrained: true
+  dropout: 0.2
+  num_classes: 3
+
+# -- Training (local, per-client per-round) ----------------------------------
+training:
+  local_epochs: 1
+  batch_size: 16
+  optimizer: adam
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  use_amp: true
+
+# -- Federated learning ------------------------------------------------------
+federated:
+  rounds: 100
+  fraction_fit: 0.5
+  fraction_evaluate: 0.0
+
+# -- Compression (Phase 3 Core Feature) ---------------------------------------
+compression:
+  enabled: true
+  method: topk             # Options: "none", "topk", "qsgd"
+  topk_ratio: 0.05         # Fraction of parameters to keep (0.05 = 5% density = 20x parameter reduction)
+  error_feedback: true     # Deep Gradient Compression style local residual buffer
+  quant_bits: 8            # Bits per scalar when method is "qsgd" (8, 4, 2)
+
+# -- Data (matches Phase 1 public cohort) ------------------------------------
+data:
+  cohort: public
+  clients: 10
+  # Global class weights: total / (n_classes * count_c)
+  # Normal: 71062, Pneumonia: 35347, COVID-19: 11956, total: 118365
+  class_weights: [0.555, 1.116, 3.299]
+
+# -- Hardware resource allocation for Flower simulation ----------------------
+hardware:
+  gpus_per_client: 0.5
+  cpus_per_client: 2
+
+# -- MLflow tracking ---------------------------------------------------------
+tracking:
+  uri: file:research/artifacts/mlruns
+  experiment: phase3-compression
+  artifacts: research/artifacts/mlflow

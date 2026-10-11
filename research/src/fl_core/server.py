@@ -136,7 +136,8 @@ def build_evaluate_fn(
             f"auroc={metrics['test_macro_auroc']:.4f}  "
             f"f1={metrics['test_macro_f1']:.4f}  "
             f"covid_sens={metrics['test_covid_19_sensitivity']:.4f}  "
-            f"comms_total={comms_summary.get('comms/total_gb', 0.0):.2f} GB",
+            f"comms_total={comms_summary.get('comms/total_gb', 0.0):.2f} GB  "
+            f"ratio={comms_summary.get('comms/compression_ratio', 1.0):.1f}x",
             flush=True,
         )
         print(format_report(y_true, y_prob), flush=True)
@@ -176,7 +177,21 @@ class FedAvgWithTracking(FedAvg):
     ) -> Tuple[Optional[Parameters], Dict[str, Scalar]]:
         # Record comms BEFORE aggregation (results contains participating clients)
         if results:
-            self.tracker.log_round(server_round, num_clients=len(results))
+            # Check if clients reported compressed wire bytes
+            has_compressed = any("wire_bytes" in fit_res.metrics for _, fit_res in results)
+            if has_compressed:
+                upload_bytes = sum(
+                    int(fit_res.metrics.get("wire_bytes", self.tracker.bytes_per_model))
+                    for _, fit_res in results
+                )
+            else:
+                upload_bytes = None
+
+            self.tracker.log_round(
+                server_round,
+                num_clients=len(results),
+                custom_upload_bytes=upload_bytes,
+            )
 
         aggregated_parameters, metrics = super().aggregate_fit(
             server_round, results, failures

@@ -31,6 +31,12 @@ from research.src.fl_core.models.densenet import (
     get_parameters,
     set_parameters,
 )
+from research.src.fl_core.comms_tracker import model_bytes
+from research.src.fl_core.compression import (
+    ModelCompressor,
+    flatten_tensor_list,
+    unflatten_tensor_list,
+)
 from research.src.eval.metrics import compute_metrics, format_report
 
 
@@ -119,6 +125,16 @@ class XRayClient(fl.client.NumPyClient):
         self.lr: float = train_cfg["learning_rate"]
         self.wd: float = train_cfg["weight_decay"]
 
+        # ── Compression (Phase 3) ───────────────────────────────────────────
+        comp_cfg = cfg.get("compression", {})
+        if comp_cfg.get("enabled", False):
+            c_dict = dict(comp_cfg)
+            if "residual_dir" not in c_dict:
+                c_dict["residual_dir"] = REPO_ROOT / "research/artifacts/phase3/residuals"
+            self.compressor = ModelCompressor(c_dict)
+        else:
+            self.compressor = ModelCompressor({"method": "none"})
+
     # ── Internal helpers ──────────────────────────────────────────────────────
 
     def _make_loader(
@@ -153,6 +169,7 @@ class XRayClient(fl.client.NumPyClient):
         self, parameters: NDArrays, config: Dict[str, Scalar]
     ) -> Tuple[NDArrays, int, Dict[str, Scalar]]:
         """Local training for ``local_epochs`` and return updated weights."""
+        initial_params = [np.array(p, copy=True) for p in parameters]
         self.set_parameters(parameters)
         optimizer = self._build_optimizer()
         self.model.train()
@@ -184,10 +201,51 @@ class XRayClient(fl.client.NumPyClient):
         avg_loss = total_loss / max(total_samples, 1)
         accuracy = total_correct / max(total_samples, 1)
 
+        # ── Apply Phase 3 compression if enabled ─────────────────────────────
+        local_params = get_parameters(self.model)
+        if self.compressor.method != "none":
+            # Only compress floating-point parameters (weights, biases, BN stats).
+            # Non-floating buffers (e.g., BN num_batches_tracked scalar integers)
+            # are passed through directly without lossy compression.
+            float_indices = [
+                i for i, lp in enumerate(local_params)
+                if np.issubdtype(lp.dtype, np.floating)
+            ]
+            deltas = [
+                torch.from_numpy(np.asarray(local_params[i] - initial_params[i])).float()
+                for i in float_indices
+            ]
+            flat_delta, meta = flatten_tensor_list(deltas)
+            client_id_str = f"client_{self.partition_id:02d}"
+
+            payload, wire_bytes = self.compressor.compress_update(
+                flat_delta.to(self.device),
+                client_id=client_id_str,
+            )
+            reconstructed_flat = self.compressor.decompress_update(payload, device=self.device)
+            reconstructed_deltas = unflatten_tensor_list(reconstructed_flat, meta)
+
+            transmitted_params = list(local_params)
+            for idx, rd in zip(float_indices, reconstructed_deltas):
+                ip = initial_params[idx]
+                lp = local_params[idx]
+                transmitted_params[idx] = (ip + rd.cpu().numpy()).astype(lp.dtype)
+
+            non_float_bytes = sum(
+                local_params[i].nbytes for i in range(len(local_params))
+                if i not in float_indices
+            )
+            wire_bytes += non_float_bytes
+
+            set_parameters(self.model, transmitted_params)
+        else:
+            wire_bytes = model_bytes(self.model)
+
         metrics: Dict[str, Scalar] = {
             "train_loss": float(avg_loss),
             "train_accuracy": float(accuracy),
             "client_id": self.partition_id,
+            "wire_bytes": float(wire_bytes),
         }
         return get_parameters(self.model), total_samples, metrics
 

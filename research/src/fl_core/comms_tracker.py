@@ -53,17 +53,34 @@ class CommsTracker:
     bytes_per_model: int
     rounds: list[dict] = field(default_factory=list)
 
-    def log_round(self, server_round: int, num_clients: int) -> dict:
+    def log_round(
+        self,
+        server_round: int,
+        num_clients: int,
+        custom_upload_bytes: Optional[int] = None,
+        custom_download_bytes: Optional[int] = None,
+    ) -> dict:
         """Record one FL round and return the round-level stats."""
-        download = num_clients * self.bytes_per_model   # server→client
-        upload = num_clients * self.bytes_per_model     # client→server
+        download = (
+            int(custom_download_bytes)
+            if custom_download_bytes is not None
+            else int(num_clients * self.bytes_per_model)
+        )
+        upload = (
+            int(custom_upload_bytes)
+            if custom_upload_bytes is not None
+            else int(num_clients * self.bytes_per_model)
+        )
         total = download + upload
+        baseline_round_bytes = int(2 * num_clients * self.bytes_per_model)
+
         entry = {
             "round": server_round,
             "num_clients": num_clients,
             "download_bytes": download,
             "upload_bytes": upload,
             "round_bytes": total,
+            "baseline_round_bytes": baseline_round_bytes,
         }
         self.rounds.append(entry)
         return entry
@@ -75,11 +92,17 @@ class CommsTracker:
         total_bytes = sum(r["round_bytes"] for r in self.rounds)
         total_download = sum(r["download_bytes"] for r in self.rounds)
         total_upload = sum(r["upload_bytes"] for r in self.rounds)
+        baseline_total = sum(r.get("baseline_round_bytes", 2 * r["num_clients"] * self.bytes_per_model) for r in self.rounds)
+
+        ratio = (baseline_total / total_bytes) if total_bytes > 0 else 1.0
+
         return {
             "comms/model_bytes": self.bytes_per_model,
             "comms/total_gb": total_bytes / 1e9,
             "comms/total_download_gb": total_download / 1e9,
             "comms/total_upload_gb": total_upload / 1e9,
+            "comms/baseline_total_gb": baseline_total / 1e9,
+            "comms/compression_ratio": round(ratio, 2),
             "comms/rounds_completed": len(self.rounds),
             "comms/avg_gb_per_round": total_bytes / len(self.rounds) / 1e9,
         }
