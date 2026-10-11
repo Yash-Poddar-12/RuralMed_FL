@@ -64,6 +64,8 @@ __pycache__/
 htmlcov/
 .venv/
 venv/
+*.whl
+record.txt
 
 # Conda and notebooks.
 .conda/
