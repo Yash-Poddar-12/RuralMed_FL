@@ -190,24 +190,44 @@ def test_sparsifier_with_residual_dir(tmp_path):
     assert 3 in idx2.tolist()
 
 
+def test_topk_warmup_ratio():
+    """Verify that compress() correctly respects dynamic ratio overrides for warmup schedules."""
+    sparsifier = TopKSparsifier(ratio=0.05, error_feedback=False)
+    delta = torch.randn(1000)
+
+    # Default ratio (5% = 50 elements)
+    idx_default, _, _ = sparsifier.compress(delta, client_id="c_warmup")
+    assert idx_default.numel() == 50
+
+    # Overridden warmup ratio (25% = 250 elements)
+    idx_warmup, _, _ = sparsifier.compress(delta, client_id="c_warmup", ratio=0.25)
+    assert idx_warmup.numel() == 250
+
+
 def test_densenet_param_compression():
-    """Verify that DenseNet parameter lists containing non-floating BatchNorm buffers compress cleanly."""
+    """Verify that DenseNet parameter lists compress Conv/Linear layers while preserving BatchNorm intact."""
     import numpy as np
     from research.src.fl_core.models.densenet import build_densenet121, get_parameters, set_parameters
 
     model = build_densenet121(pretrained=False)
     local_params = get_parameters(model)
     initial_params = [np.array(p, copy=True) for p in local_params]
+    keys = list(model.state_dict().keys())
 
-    float_indices = [
-        i for i, lp in enumerate(local_params)
-        if np.issubdtype(lp.dtype, np.floating)
+    # Compressible: Conv and Linear weights & biases only (non-BN)
+    compressible_indices = [
+        i for i, (k, lp) in enumerate(zip(keys, local_params))
+        if "norm" not in k and np.issubdtype(lp.dtype, np.floating)
     ]
+    # Verify exactly 122 Conv/Linear layers are selected
+    assert len(compressible_indices) == 122
+
     deltas = [
         torch.from_numpy(np.asarray(local_params[i] - initial_params[i])).float()
-        for i in float_indices
+        for i in compressible_indices
     ]
     flat_delta, meta = flatten_tensor_list(deltas)
+    assert flat_delta.numel() == 6_873_283
 
     compressor = ModelCompressor({"method": "topk", "topk_ratio": 0.05})
     payload, wire_bytes = compressor.compress_update(flat_delta, client_id="c_test")
@@ -215,11 +235,18 @@ def test_densenet_param_compression():
     rec_deltas = unflatten_tensor_list(rec_flat, meta)
 
     transmitted_params = list(local_params)
-    for idx, rd in zip(float_indices, rec_deltas):
+    for idx, rd in zip(compressible_indices, rec_deltas):
         ip = initial_params[idx]
         lp = local_params[idx]
         transmitted_params[idx] = (ip + rd.cpu().numpy()).astype(lp.dtype)
 
     set_parameters(model, transmitted_params)
-    assert len(get_parameters(model)) == len(local_params)
+    reloaded_params = get_parameters(model)
+    assert len(reloaded_params) == len(local_params)
+
+    # Verify that all BatchNorm parameters (indices not in compressible_indices) are 100% identical
+    for i in range(len(local_params)):
+        if i not in compressible_indices:
+            np.testing.assert_array_equal(reloaded_params[i], local_params[i])
+
 

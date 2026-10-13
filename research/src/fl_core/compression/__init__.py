@@ -66,6 +66,7 @@ class ModelCompressor:
 
     def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         cfg = config or {}
+        self.cfg = cfg
         self.method = str(cfg.get("method", "none")).lower()
         self.topk_ratio = float(cfg.get("topk_ratio", 0.05))
         self.error_feedback = bool(cfg.get("error_feedback", True))
@@ -91,6 +92,7 @@ class ModelCompressor:
         self,
         flat_delta: torch.Tensor,
         client_id: str = "default",
+        ratio: Optional[float] = None,
     ) -> Tuple[Dict[str, Any], int]:
         """Compress a 1D update vector.
 
@@ -101,7 +103,9 @@ class ModelCompressor:
         total_elements = flat_delta.numel()
 
         if self.method == "topk" and self.sparsifier is not None:
-            indices, values, wire_bytes = self.sparsifier.compress(flat_delta, client_id=client_id)
+            indices, values, wire_bytes = self.sparsifier.compress(
+                flat_delta, client_id=client_id, ratio=ratio
+            )
             payload = {
                 "method": "topk",
                 "indices": indices.cpu(),

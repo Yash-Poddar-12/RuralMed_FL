@@ -229,6 +229,9 @@ def main() -> None:
     )
 
     # ── Strategy ──────────────────────────────────────────────────────────────
+    def on_fit_config_fn(server_round: int) -> dict:
+        return {"round": server_round}
+
     strategy = FedAvgWithTracking(
         tracker=tracker,
         fraction_fit=FRAC_FIT,
@@ -236,6 +239,7 @@ def main() -> None:
         min_fit_clients=max(1, int(NUM_CLIENTS * FRAC_FIT)),
         min_available_clients=NUM_CLIENTS,
         evaluate_fn=evaluate_fn,
+        on_fit_config_fn=on_fit_config_fn,
         initial_parameters=initial_parameters,
         # FedAvg weighted aggregation: Flower uses the num_examples returned
         # by each client's fit() call — larger clinics get more weight.

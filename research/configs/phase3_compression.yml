@@ -29,6 +29,8 @@ compression:
   enabled: true
   method: topk             # Options: "none", "topk", "qsgd"
   topk_ratio: 0.05         # Fraction of parameters to keep (0.05 = 5% density = 20x parameter reduction)
+  warmup_rounds: 5         # Warmup rounds at higher density for early stability (Lin et al. DGC)
+  warmup_ratio: 0.25       # Density during warmup (25% for rounds 1-5, then 5%)
   error_feedback: true     # Deep Gradient Compression style local residual buffer
   quant_bits: 8            # Bits per scalar when method is "qsgd" (8, 4, 2)
 

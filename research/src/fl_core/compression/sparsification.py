@@ -82,12 +82,14 @@ class TopKSparsifier:
         self,
         delta: torch.Tensor,
         client_id: str = "default",
+        ratio: Optional[float] = None,
     ) -> Tuple[torch.Tensor, torch.Tensor, int]:
         """Compress a 1D update vector using top-k selection and error feedback.
 
         Args:
             delta: 1D parameter update tensor (w_local - w_global).
             client_id: Unique client identifier to track client-specific residual.
+            ratio: Optional override for sparsification ratio (e.g. during warmup).
 
         Returns:
             Tuple of:
@@ -96,7 +98,8 @@ class TopKSparsifier:
               - wire_bytes: Exact wire byte count for this compressed update.
         """
         total_elements = delta.numel()
-        k = max(1, min(total_elements, int(math.ceil(total_elements * self.ratio))))
+        eff_ratio = float(ratio) if ratio is not None else self.ratio
+        k = max(1, min(total_elements, int(math.ceil(total_elements * eff_ratio))))
 
         # 1. Incorporate local residual (error feedback)
         res = self._get_residual(client_id, delta.shape, delta.device, delta.dtype)

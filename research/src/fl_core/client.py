@@ -189,6 +189,8 @@ class XRayClient(fl.client.NumPyClient):
                     loss = self.criterion(logits, labels)
 
                 self.scaler.scale(loss).backward()
+                self.scaler.unscale_(optimizer)
+                torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=5.0)
                 self.scaler.step(optimizer)
                 self.scaler.update()
 
@@ -204,38 +206,51 @@ class XRayClient(fl.client.NumPyClient):
         # ── Apply Phase 3 compression if enabled ─────────────────────────────
         local_params = get_parameters(self.model)
         if self.compressor.method != "none":
-            # Only compress floating-point parameters (weights, biases, BN stats).
-            # Non-floating buffers (e.g., BN num_batches_tracked scalar integers)
-            # are passed through directly without lossy compression.
-            float_indices = [
-                i for i, lp in enumerate(local_params)
-                if np.issubdtype(lp.dtype, np.floating)
+            # Compressible parameters: Conv and Linear weights & biases.
+            # BatchNorm parameters (containing 'norm' in key or non-floating buffers)
+            # are transmitted uncompressed. Per Lin et al. (DGC, ICLR 2018), BatchNorm
+            # accounts for < 2.5% of parameters and must be preserved intact to prevent
+            # running-variance corruption and numerical divergence (NaNs).
+            keys = list(self.model.state_dict().keys())
+            compressible_indices = [
+                i for i, (k, lp) in enumerate(zip(keys, local_params))
+                if "norm" not in k and np.issubdtype(lp.dtype, np.floating)
             ]
             deltas = [
                 torch.from_numpy(np.asarray(local_params[i] - initial_params[i])).float()
-                for i in float_indices
+                for i in compressible_indices
             ]
             flat_delta, meta = flatten_tensor_list(deltas)
             client_id_str = f"client_{self.partition_id:02d}"
 
+            # Dynamic warmup schedule: use higher density for early rounds if configured
+            server_round = int(config.get("round", 1))
+            warmup_rounds = int(self.compressor.cfg.get("warmup_rounds", 0))
+            if server_round <= warmup_rounds:
+                eff_ratio = float(self.compressor.cfg.get("warmup_ratio", 0.25))
+            else:
+                eff_ratio = self.compressor.topk_ratio
+
             payload, wire_bytes = self.compressor.compress_update(
                 flat_delta.to(self.device),
                 client_id=client_id_str,
+                ratio=eff_ratio,
             )
             reconstructed_flat = self.compressor.decompress_update(payload, device=self.device)
             reconstructed_deltas = unflatten_tensor_list(reconstructed_flat, meta)
 
             transmitted_params = list(local_params)
-            for idx, rd in zip(float_indices, reconstructed_deltas):
+            for idx, rd in zip(compressible_indices, reconstructed_deltas):
                 ip = initial_params[idx]
                 lp = local_params[idx]
                 transmitted_params[idx] = (ip + rd.cpu().numpy()).astype(lp.dtype)
 
-            non_float_bytes = sum(
+            # Account for exact wire bytes of uncompressed BatchNorm parameters and buffers
+            uncompressed_bytes = sum(
                 local_params[i].nbytes for i in range(len(local_params))
-                if i not in float_indices
+                if i not in compressible_indices
             )
-            wire_bytes += non_float_bytes
+            wire_bytes += uncompressed_bytes
 
             set_parameters(self.model, transmitted_params)
         else:
