@@ -1,0 +1,73 @@
+schema_version: 1
+seed: 42
+experiment: phase4-dropout-sweep
+
+# -- Model -------------------------------------------------------------------
+model:
+  architecture: densenet121
+  pretrained: true
+  dropout: 0.2
+  num_classes: 3
+
+# -- Training (local, per-client per-round) ----------------------------------
+training:
+  local_epochs: 1
+  batch_size: 16
+  optimizer: adam
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  use_amp: true
+
+# -- Federated learning ------------------------------------------------------
+federated:
+  rounds: 100
+  fraction_fit: 0.6
+  fraction_evaluate: 0.0
+
+# -- Phase 4 async aggregation -----------------------------------------------
+async:
+  strategy: fedbuff           # "fedbuff" | "sync_dropout"
+  buffer_size: 3              # Fixed at best K from buffer-size sweep
+  staleness_alpha: 0.5
+
+# -- Dropout sweep -----------------------------------------------------------
+# Run this config once per dropout_prob value:
+#   0.00  →  no dropout (approaches Phase 2 ceiling)
+#   0.10  →  10% dropout
+#   0.25  →  25% dropout
+#   0.40  →  40% dropout
+#   0.60  →  60% dropout
+straggler:
+  dropout_prob: 0.25          # override via --dropout flag on the run script
+  delay_mu: 0.0
+  delay_sigma: 0.5
+  size_correlated: true
+  size_scale: 0.3
+  seed: 42
+
+# -- Compression (disabled for the dropout sweep — isolate the async effect) -
+compression:
+  enabled: false
+  method: topk
+  topk_ratio: 0.05
+  warmup_rounds: 5
+  warmup_ratio: 0.25
+  error_feedback: true
+  quant_bits: 8
+
+# -- Data --------------------------------------------------------------------
+data:
+  cohort: public
+  clients: 10
+  class_weights: [0.555, 1.116, 3.299]
+
+# -- Hardware resource allocation --------------------------------------------
+hardware:
+  gpus_per_client: 0.5
+  cpus_per_client: 2
+
+# -- MLflow tracking ---------------------------------------------------------
+tracking:
+  uri: file:research/artifacts/mlruns
+  experiment: phase4-dropout-sweep
+  artifacts: research/artifacts/mlflow
