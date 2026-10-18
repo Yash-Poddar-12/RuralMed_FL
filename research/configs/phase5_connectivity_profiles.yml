@@ -1,0 +1,49 @@
+# Phase 5 — Connectivity profiles experiment configuration
+# Tests the three connectivity tiers (stable / intermittent / unreliable)
+# at a fixed bandwidth cap to validate the engine produces meaningful
+# heterogeneous outcomes before the full bandwidth sweep.
+#
+# All FedBuff aggregation parameters are unchanged from Phase 4 (K=3,
+# dropout driven entirely by the Markov connectivity engine).
+
+experiment_name: phase5-connectivity-profiles
+
+# Flower simulation parameters
+num_clients: 10
+num_rounds: 50
+clients_per_round: 10        # all clients participate every round
+
+# FedBuff aggregation (Phase 4, unchanged)
+strategy: fedbuff
+buffer_size: 3
+staleness_alpha: 0.5
+
+# Connectivity engine
+connectivity:
+  engine: markov
+  seed: 42
+  round_budget_seconds: 300   # 5-minute budget per round
+
+# Payload size (Phase 3 compressed, TopK 0.01 ratio, DenseNet-121)
+# ~11 MB compressed model at 1% sparsity ratio
+payload_compressed_bytes: 11534336
+
+# Bandwidth cap configurations to sweep in this run
+bandwidth_profiles:
+  - name: "no_cap"
+    bw_cap_kbps: null          # no cap — uses raw state bandwidth ranges
+
+  - name: "500kbps_cap"
+    bw_cap_kbps: 500.0         # tight cap — all GOOD traffic bottlenecked
+
+  - name: "200kbps_cap"
+    bw_cap_kbps: 200.0         # edge-level cap
+
+# Local training (per client per round)
+local_epochs: 3
+batch_size: 32
+learning_rate: 0.001
+
+# Logging
+mlflow_uri: "file:research/artifacts/mlruns"
+log_connectivity_traces: true  # saves per-client bandwidth/state traces

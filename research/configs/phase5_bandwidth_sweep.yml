@@ -1,0 +1,77 @@
+# Phase 5 — Bandwidth sweep experiment configuration
+# Sweeps available bandwidth cap from very tight (64 kbps) to uncapped,
+# producing the "accuracy retained vs. average bandwidth" curve described
+# in Phase 5 spec §6.
+#
+# Also includes a joint bandwidth × compression interaction point at two
+# compression settings (Phase 3's TopK 1% vs. TopK 10%) to demonstrate
+# the multiplicative effect described in Phase 5 spec §5.
+
+experiment_name: phase5-bandwidth-sweep
+
+num_clients: 10
+num_rounds: 50
+clients_per_round: 10
+
+# FedBuff (Phase 4, unchanged)
+strategy: fedbuff
+buffer_size: 3
+staleness_alpha: 0.5
+
+# Connectivity engine
+connectivity:
+  engine: markov
+  seed: 42
+  round_budget_seconds: 300
+
+# Local training
+local_epochs: 3
+batch_size: 32
+learning_rate: 0.001
+
+# Logging
+mlflow_uri: "file:research/artifacts/mlruns"
+log_connectivity_traces: true
+
+# Bandwidth sweep points
+# Each entry defines one MLflow run.
+# payload_compressed_bytes comes from Phase 3 accounting:
+#   TopK ratio 0.01 → ~11.5 MB
+#   TopK ratio 0.10 → ~23.0 MB   (more parameters retained → larger payload)
+#   Uncompressed    → ~86.0 MB
+
+bandwidth_sweep:
+
+  # ── Axis 1: bandwidth cap at fixed compression (TopK 1%) ─────────────────
+  - run_name: "bw_uncapped_topk1pct"
+    bw_cap_kbps: null
+    payload_compressed_bytes: 11534336    # ~11 MB  (TopK 1%)
+
+  - run_name: "bw_1024kbps_topk1pct"
+    bw_cap_kbps: 1024.0
+    payload_compressed_bytes: 11534336
+
+  - run_name: "bw_512kbps_topk1pct"
+    bw_cap_kbps: 512.0
+    payload_compressed_bytes: 11534336
+
+  - run_name: "bw_256kbps_topk1pct"
+    bw_cap_kbps: 256.0
+    payload_compressed_bytes: 11534336
+
+  - run_name: "bw_128kbps_topk1pct"
+    bw_cap_kbps: 128.0
+    payload_compressed_bytes: 11534336
+
+  - run_name: "bw_64kbps_topk1pct"
+    bw_cap_kbps: 64.0
+    payload_compressed_bytes: 11534336
+
+  # ── Axis 2: joint bandwidth × compression interaction (2 cap points) ─────
+  - run_name: "bw_256kbps_topk10pct"
+    bw_cap_kbps: 256.0
+    payload_compressed_bytes: 23068672    # ~23 MB  (TopK 10%, less compression)
+
+  - run_name: "bw_256kbps_uncompressed"
+    bw_cap_kbps: 256.0
+    payload_compressed_bytes: 86000000   # ~86 MB  (uncompressed baseline)
