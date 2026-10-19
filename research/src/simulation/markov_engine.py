@@ -61,6 +61,8 @@ class MarkovConnectivityEngine:
         Returns:
             The new ConnState after the transition.
         """
+        if client_id not in self.profiles and len(self.profiles) > 0:
+            client_id = client_id % len(self.profiles)
         profile = self.profiles[client_id]
         current = self._state[client_id]
         row = profile.transition_matrix[int(current)]
@@ -84,6 +86,8 @@ class MarkovConnectivityEngine:
 
     def current_state(self, client_id: int) -> ConnState:
         """Return the current state of client_id without advancing."""
+        if client_id not in self._state and len(self._state) > 0:
+            client_id = client_id % len(self._state)
         return self._state[client_id]
 
     # ── Diagnostics ───────────────────────────────────────────────────────────

@@ -132,11 +132,15 @@ class FedBuffStrategy(FedAvg):
         # Standard FedAvg selection
         fit_instructions = super().configure_fit(server_round, parameters, client_manager)
 
-        # Map proxy → client_id for dropout sampling
-        selected_ids = [
-            int(proxy.cid) if proxy.cid.isdigit() else idx
-            for idx, (proxy, _) in enumerate(fit_instructions)
-        ]
+        # Map proxy → client_id for dropout sampling (use partition_id in simulation mode)
+        selected_ids = []
+        for idx, (proxy, _) in enumerate(fit_instructions):
+            if hasattr(proxy, "partition_id"):
+                selected_ids.append(int(proxy.partition_id))
+            elif hasattr(proxy, "cid") and str(proxy.cid).isdigit() and int(proxy.cid) < 1000:
+                selected_ids.append(int(proxy.cid))
+            else:
+                selected_ids.append(idx)
 
         # Apply dropout
         if self.dropout_sampler is not None and getattr(self.dropout_sampler, "base_prob", 1.0) > 0.0:
@@ -201,11 +205,15 @@ class FedBuffStrategy(FedAvg):
 
         # ── Buffer each surviving client's update ─────────────────────────
         for proxy, fit_res in active_results:
-            # Resolve client_id
-            if proxy.cid.isdigit():
+            # Resolve client_id: prefer client metrics, then proxy partition_id
+            if "client_id" in fit_res.metrics:
+                cid = int(fit_res.metrics["client_id"])
+            elif hasattr(proxy, "partition_id"):
+                cid = int(proxy.partition_id)
+            elif hasattr(proxy, "cid") and str(proxy.cid).isdigit() and int(proxy.cid) < 1000:
                 cid = int(proxy.cid)
             else:
-                cid = int(fit_res.metrics.get("client_id", 0))
+                cid = 0
 
             dispatch_ver = self._dispatch_version.get(cid, self._global_version)
             staleness = max(0, self._global_version - dispatch_ver)

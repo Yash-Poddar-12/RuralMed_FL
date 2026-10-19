@@ -80,10 +80,14 @@ class SyncWithDropout(FedAvg):
             server_round, parameters, client_manager
         )
 
-        selected_ids = [
-            int(proxy.cid) if proxy.cid.isdigit() else idx
-            for idx, (proxy, _) in enumerate(fit_instructions)
-        ]
+        selected_ids = []
+        for idx, (proxy, _) in enumerate(fit_instructions):
+            if hasattr(proxy, "partition_id"):
+                selected_ids.append(int(proxy.partition_id))
+            elif hasattr(proxy, "cid") and str(proxy.cid).isdigit() and int(proxy.cid) < 1000:
+                selected_ids.append(int(proxy.cid))
+            else:
+                selected_ids.append(idx)
 
         if self.dropout_sampler is not None and getattr(self.dropout_sampler, "base_prob", 1.0) > 0.0:
             surviving_ids = set(self.dropout_sampler.sample_dropouts(selected_ids))
