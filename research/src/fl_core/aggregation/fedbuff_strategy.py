@@ -139,7 +139,7 @@ class FedBuffStrategy(FedAvg):
         ]
 
         # Apply dropout
-        if self.dropout_sampler is not None and self.dropout_sampler.base_prob > 0.0:
+        if self.dropout_sampler is not None and getattr(self.dropout_sampler, "base_prob", 1.0) > 0.0:
             surviving_ids = set(self.dropout_sampler.sample_dropouts(selected_ids))
         else:
             surviving_ids = set(selected_ids)

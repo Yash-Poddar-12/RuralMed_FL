@@ -68,12 +68,20 @@ class BandwidthDelayAdapter:
         self.round_budget_s = round_budget_s
         self._rng = random.Random(seed)
 
+        # Phase 4 interface compatibility: indicates dropout sampling is active
+        self.base_prob: float = 1.0
+
         # Diagnostics
         self.bandwidth_log: Dict[int, List[float]] = {}     # {cid: [kbps per round]}
         self.delay_log:     Dict[int, List[float]] = {}     # {cid: [tx_time_s per round]}
         self.dropout_log:   Dict[int, List[bool]]  = {}     # {cid: [dropped per round]}
 
     # ── Phase 4-compatible interface ─────────────────────────────────────────
+
+    def sample_dropouts_mask(self, client_ids: List[int]) -> Dict[int, bool]:
+        """Return {client_id: survived} dict for this round."""
+        survivors = set(self.sample_dropouts(client_ids))
+        return {cid: cid in survivors for cid in client_ids}
 
     def sample_dropouts(self, client_ids: List[int]) -> List[int]:
         """Return the list of clients that survive this round.
