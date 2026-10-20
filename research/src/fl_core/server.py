@@ -68,7 +68,7 @@ def build_evaluate_fn(
     test_dataset = ImagingDataset(processed_root, test_index)
     test_loader = DataLoader(
         test_dataset,
-        batch_size=training_cfg["batch_size"],
+        batch_size=max(64, training_cfg.get("batch_size", 16) * 4),
         shuffle=False,
         num_workers=2,
         pin_memory=True,
