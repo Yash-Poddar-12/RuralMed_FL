@@ -342,6 +342,8 @@ def main() -> None:
         ray_init_args={
             "include_dashboard": False,
             "num_cpus": hw["cpus_per_client"] * NUM_CLIENTS,
+            "object_store_memory": 256 * 1024 * 1024,
+            "ignore_reinit_error": True,
         },
     )
 
