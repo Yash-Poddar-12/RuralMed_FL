@@ -130,39 +130,71 @@ def run_sweep(
     *,
     dry_run: bool = False,
     max_runs: int | None = None,
+    rounds: int | None = None,
+    seeds: list[int] | None = None,
+    no_tracking: bool = False,
+    skip_existing: bool = False,
 ) -> dict[str, Any]:
     """Run the configured sweep and return its manifest."""
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+    if rounds is not None:
+        config["num_rounds"] = rounds
+    if no_tracking:
+        config["no_tracking"] = True
+    if seeds is not None:
+        config["sweep"]["seeds"] = seeds
+        for extra in config["sweep"].get("additional_runs", []):
+            extra["seeds"] = seeds
     specs = expand_sweep(config)
     if max_runs is not None:
         specs = specs[:max_runs]
     output_dir.mkdir(parents=True, exist_ok=True)
     records: list[dict[str, Any]] = []
-    for spec in specs:
+    total_runs = len(specs)
+    for idx, spec in enumerate(specs, start=1):
         result_path = output_dir / f"{spec['run_label']}.json"
         command = _command(spec, result_path, config)
         record = {**spec, "result_path": str(result_path), "command": command}
         if dry_run:
             record["status"] = "planned"
+        elif skip_existing and result_path.exists():
+            print(f"[{idx}/{total_runs}] Skipping already completed run: {spec['run_label']}", flush=True)
+            record["status"] = "completed"
+            record["returncode"] = 0
+            record["log_path"] = str(output_dir / f"{spec['run_label']}.log")
         else:
+            print(f"\n{'='*70}", flush=True)
+            print(f"[{idx}/{total_runs}] Starting run: {spec['run_label']} ({config.get('num_rounds', 30)} rounds)", flush=True)
+            print(f"{'='*70}\n", flush=True)
             log_path = output_dir / f"{spec['run_label']}.log"
             with log_path.open("w", encoding="utf-8") as log:
-                completed = subprocess.run(
+                proc = subprocess.Popen(
                     command,
                     cwd=REPO_ROOT,
                     env={**os.environ, "PYTHONPATH": str(REPO_ROOT)},
-                    stdout=log,
+                    stdout=subprocess.PIPE,
                     stderr=subprocess.STDOUT,
-                    check=False,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    bufsize=1,
                 )
-            record["status"] = "completed" if completed.returncode == 0 else "failed"
-            record["returncode"] = completed.returncode
+                if proc.stdout:
+                    for line in proc.stdout:
+                        sys.stdout.write(line)
+                        sys.stdout.flush()
+                        log.write(line)
+                        log.flush()
+                proc.wait()
+                returncode = proc.returncode
+            record["status"] = "completed" if returncode == 0 else "failed"
+            record["returncode"] = returncode
             record["log_path"] = str(log_path)
-            if completed.returncode == 0 and result_path.exists():
+            if returncode == 0 and result_path.exists():
                 result = json.loads(result_path.read_text(encoding="utf-8"))
                 result["configuration"] = spec
                 result_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
-            elif completed.returncode != 0:
+            elif returncode != 0:
                 raise RuntimeError(
                     f"Phase 6 run failed ({spec['run_label']}); see {log_path}"
                 )
@@ -186,12 +218,26 @@ def main() -> None:
     parser.add_argument("--output-dir", type=Path, default=REPO_ROOT / "results/phase6/raw")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--max-runs", type=int, default=None)
+    parser.add_argument("--rounds", type=int, default=None, help="Override number of training rounds (e.g. 30)")
+    parser.add_argument("--seed", type=int, default=None, help="Run only this seed (e.g. 42)")
+    parser.add_argument("--seeds", type=int, nargs="+", default=None, help="List of seeds to run")
+    parser.add_argument("--no-tracking", action="store_true", help="Disable MLflow tracking")
+    parser.add_argument("--skip-existing", action="store_true", help="Skip runs whose result JSON already exists")
     args = parser.parse_args()
+
+    seeds = args.seeds
+    if args.seed is not None:
+        seeds = [args.seed]
+
     manifest = run_sweep(
         args.config,
         args.output_dir,
         dry_run=args.dry_run,
         max_runs=args.max_runs,
+        rounds=args.rounds,
+        seeds=seeds,
+        no_tracking=args.no_tracking,
+        skip_existing=args.skip_existing,
     )
     print(json.dumps({
         "experiment_name": manifest["experiment_name"],

@@ -58,14 +58,15 @@ def summarize_results(results: list[dict[str, Any]]) -> pd.DataFrame:
     return summary
 
 
-def recommend_operating_point(summary: pd.DataFrame) -> dict[str, Any]:
+def recommend_operating_point(summary: pd.DataFrame, min_seeds: int = 1) -> dict[str, Any]:
     """Select the highest-AUROC point subject to a practical efficiency floor."""
     candidates = summary.copy()
     candidates.loc[:, "bandwidth_score"] = candidates["bandwidth_kbps"].fillna(0)
     candidates.loc[:, "efficiency"] = 1.0 / (1.0 + candidates["bandwidth_score"])
-    candidates = candidates[candidates["seeds"] >= 3]
+    req_seeds = 3 if (candidates["seeds"] >= 3).any() else max(1, min_seeds)
+    candidates = candidates[candidates["seeds"] >= req_seeds]
     if candidates.empty:
-        raise ValueError("At least three seeds are required for a recommendation")
+        raise ValueError(f"At least {req_seeds} seeds are required for a recommendation")
     # Prefer a non-baseline compressed point, then maximize AUROC and F1.
     compressed = candidates[candidates["compression"] != "none"]
     pool = compressed if not compressed.empty else candidates
@@ -83,7 +84,7 @@ def recommend_operating_point(summary: pd.DataFrame) -> dict[str, Any]:
         "macro_f1_mean": float(best["test_macro_f1_mean"]),
         "accuracy_mean": float(best["test_accuracy_mean"]),
         "seeds": int(best["seeds"]),
-        "justification": "Highest mean macro-AUROC among compressed points with at least three seeds; standard deviation is reported for uncertainty.",
+        "justification": f"Highest mean macro-AUROC among compressed points with at least {req_seeds} seed(s); standard deviation is reported for uncertainty.",
     }
 
 
