@@ -412,7 +412,7 @@ def main() -> None:
             for key, values in history.metrics_centralized.items():
                 row[key] = next((float(value) for r, value in values if r == round_number), None)
             round_metrics.append(row)
-        result_path.write_text(json.dumps({
+        result_data = {
             "run_label": run_label,
             "seed": seed,
             "strategy": args.strategy or "fedbuff",
@@ -436,7 +436,23 @@ def main() -> None:
                 for round_number, dropped in enumerate(drops, start=1)
             ],
             "elapsed_seconds": elapsed,
-        }, indent=2), encoding="utf-8")
+            "configuration": {
+                "compression": {
+                    "name": args.compression_method or ("topk_1pct" if "topk1pct" in run_label else ("topk_10pct" if "topk10pct" in run_label else "none")),
+                    "method": args.compression_method or ("topk" if "topk" in run_label else "none"),
+                    "topk_ratio": args.topk_ratio or (0.01 if "topk1pct" in run_label else (0.10 if "topk10pct" in run_label else None)),
+                    "quant_bits": args.quant_bits,
+                },
+                "connectivity": {
+                    "name": run_label,
+                    "bandwidth_kbps": bw_cap_kbps,
+                    "dropout_rate": 0.0 if bw_cap_kbps is None or bw_cap_kbps >= 1024 else (0.25 if bw_cap_kbps >= 512 else (0.50 if bw_cap_kbps >= 256 else 0.75)),
+                },
+                "bandwidth_kbps": bw_cap_kbps,
+                "dropout_rate": 0.0 if bw_cap_kbps is None or bw_cap_kbps >= 1024 else (0.25 if bw_cap_kbps >= 512 else (0.50 if bw_cap_kbps >= 256 else 0.75)),
+            },
+        }
+        result_path.write_text(json.dumps(result_data, indent=2), encoding="utf-8")
         print(f"Structured result saved: {result_path}", flush=True)
 
     if mlflow_run_id and not args.no_tracking:
