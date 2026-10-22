@@ -2,6 +2,8 @@
   "name": "fl-rural-imaging-backend",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "engines": {"node": ">=24 <25"},
+  "scripts": {"start": "node --env-file-if-exists=.env server.js", "dev": "node --env-file-if-exists=.env --watch server.js"},
   "dependencies": {"express": "5.2.1"}
 }
