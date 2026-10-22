@@ -430,7 +430,7 @@ def main() -> None:
                     "client_index": cid,
                     "round_number": round_number,
                     "status": "dropped" if dropped else "participated",
-                    "effective_bandwidth": bw_adapter.bandwidth_log[cid][round_number],
+                    "effective_bandwidth": bw_adapter.bandwidth_log[cid][round_number - 1],
                 }
                 for cid, drops in bw_adapter.dropout_log.items()
                 for round_number, dropped in enumerate(drops, start=1)
