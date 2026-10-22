@@ -128,6 +128,8 @@ class BandwidthDelayAdapter:
             tx_time_s = float("inf")
         else:
             bw_kbps = self._rng.uniform(bw_lo, bw_hi)
+            if self.engine.bw_cap_kbps is not None:
+                bw_kbps = min(bw_kbps, self.engine.bw_cap_kbps)
             bw_bps  = bw_kbps * _KBPS_TO_BPS
             tx_bits = self.payload_bytes * _BITS_PER_BYTE
             tx_time_s = tx_bits / bw_bps

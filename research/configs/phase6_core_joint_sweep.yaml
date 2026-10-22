@@ -1,0 +1,66 @@
+schema_version: 1
+experiment_name: phase6-core-joint-sweep
+seed: 42
+num_rounds: 50
+buffer_size: 3
+default_payload_bytes: 86000000
+phase1_config: research/configs/phase1.yml
+
+# The core sweep prioritizes compression x realistic connectivity with three
+# seeds.  The secondary synchronous comparison is listed separately below so
+# it does not multiply the full core factorial.
+sweep:
+  seeds: [42, 43, 44]
+  strategies: [fedbuff]
+  compression:
+    - name: none
+      method: none
+      payload_bytes: 86000000
+    - name: topk_1pct
+      method: topk
+      topk_ratio: 0.01
+      payload_bytes: 11534336
+    - name: topk_10pct
+      method: topk
+      topk_ratio: 0.10
+      payload_bytes: 23068672
+    - name: qsgd_4bit
+      method: qsgd
+      quant_bits: 4
+      payload_bytes: 43000000
+  connectivity:
+    - name: no_dropout
+      dropout_rate: 0.00
+      bandwidth_kbps: 2048
+      round_budget_seconds: 300
+      phase5_run_name: bw_uncapped_topk1pct
+    - name: moderate_dropout
+      dropout_rate: 0.25
+      bandwidth_kbps: 512
+      round_budget_seconds: 120
+      phase5_run_name: bw_512kbps_topk1pct
+    - name: severe_dropout
+      dropout_rate: 0.50
+      bandwidth_kbps: 256
+      round_budget_seconds: 60
+      phase5_run_name: bw_256kbps_topk1pct
+    - name: extreme_dropout
+      dropout_rate: 0.75
+      bandwidth_kbps: 64
+      round_budget_seconds: 30
+      phase5_run_name: bw_64kbps_topk1pct
+  additional_runs:
+    - strategy: sync_dropout
+      buffer_size: 3
+      compression:
+        name: topk_1pct
+        method: topk
+        topk_ratio: 0.01
+        payload_bytes: 11534336
+      connectivity:
+        name: moderate_dropout
+        dropout_rate: 0.25
+        bandwidth_kbps: 512
+        round_budget_seconds: 120
+        phase5_run_name: bw_512kbps_topk1pct
+      seeds: [42, 43, 44]

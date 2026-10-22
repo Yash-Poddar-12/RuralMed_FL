@@ -13,6 +13,43 @@ python -m research.src.data_prep.inspect_client --config research/configs/phase1
 
 The single foreground command downloads pinned NIH v3 and COVID-QU-Ex v7, verifies SHA-256/CRC/counts, handles an approved local CheXpert-small release or ZIP, preprocesses all available sources, groups patients/duplicates, splits and partitions ten clinics, then logs MLflow and exports portable indices/reports. Rerun the same command after interruption. Missing CheXpert prints a pending message and creates the public cohort; adding it creates the separate all cohort. `--no-download` permits existing verified inputs only; `--no-tracking` explicitly leaves tracker verification pending. All paths derive from the repo or configured data root. See `--help` for local archive/source-root options.
 
+## Phase 6: joint experiment sweep
+
+Phase 6 expands one YAML definition into reproducible Phase 5 runs, retaining
+each seed's raw result. The default configuration contains the core
+compression x connectivity sweep (three seeds per point) and the secondary
+synchronous comparison:
+
+```powershell
+python -m research.src.eval.experiment_runner `
+  --config research/configs/phase6_core_joint_sweep.yaml `
+  --output-dir results/phase6/raw `
+  --dry-run
+```
+
+Remove `--dry-run` to launch the GPU simulations. After runs complete, create
+the mean/std summary, joint heatmaps, async comparison and operating-point
+writeup:
+
+```powershell
+python -m research.src.eval.joint_metric_plots `
+  --results-dir results/phase6/raw `
+  --output-dir results/phase6
+```
+
+Prepare a batch payload for Supabase (no credentials are needed for export):
+
+```powershell
+python -m research.src.eval.supabase_writer `
+  --results-dir results/phase6/raw `
+  --batch-json results/phase6/supabase_batch.json
+```
+
+After applying the migration in `infra/supabase/migrations/`, add
+`--ingest` and provide `SUPABASE_URL` plus the server-only
+`SUPABASE_SERVICE_ROLE_KEY` in the environment to send the batch through the
+Supabase REST API. The raw per-seed JSON files remain the source of truth.
+
 Raw/processed data are under `<data-root>/{raw,processed}`. Small allowed outputs are under `research/data/partitions/full/{public,all}`; full manifests/images, archives and credentials stay ignored. The [data contract](../infra/docs/data-contract.md) defines labels, leakage rules and the normalized CPU tensor loader.
 
 ## Offline dev profile

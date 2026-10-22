@@ -54,6 +54,7 @@ from research.src.fl_core.comms_tracker import CommsTracker, model_bytes
 from research.src.fl_core.client import XRayClient, DEVICE
 from research.src.fl_core.server import build_evaluate_fn
 from research.src.fl_core.aggregation import FedBuffStrategy
+from research.src.fl_core.aggregation.sync_with_dropout import SyncWithDropout
 from research.src.simulation import (
     MarkovConnectivityEngine,
     BandwidthDelayAdapter,
@@ -125,21 +126,34 @@ def main() -> None:
         "--config",
         default=str(REPO_ROOT / "research/configs/phase5_bandwidth_sweep.yml"),
     )
+    parser.add_argument("--phase1-config", default=str(REPO_ROOT / "research/configs/phase1.yml"),
+                        help="Phase 1 data/config path; use phase1-dev.yml for the local sample")
     parser.add_argument("--run-name", default=None, dest="run_name",
                         help="Select a named entry from bandwidth_sweep block")
     parser.add_argument("--bw-cap", default=None, dest="bw_cap",
                         help="Override bandwidth cap in kbps, or 'none' for uncapped")
     parser.add_argument("--rounds", type=int, default=None)
     parser.add_argument("--seed", type=int, default=None)
+    parser.add_argument("--strategy", choices=["fedbuff", "sync_dropout"], default=None)
+    parser.add_argument("--buffer-size", type=int, default=None)
+    parser.add_argument("--compression-method", choices=["none", "topk", "qsgd"], default=None)
+    parser.add_argument("--topk-ratio", type=float, default=None)
+    parser.add_argument("--quant-bits", type=int, default=None)
+    parser.add_argument("--round-budget", type=float, default=None)
+    parser.add_argument("--payload-bytes", type=int, default=None)
+    parser.add_argument("--result-json", default=None,
+                        help="Write a Phase 6-compatible structured result JSON")
     parser.add_argument("--no-tracking", action="store_true")
     args = parser.parse_args()
 
     # ── Load configs ──────────────────────────────────────────────────────────
     cfg = _load_cfg(args.config)
-    cfg1 = _resolve_phase1(REPO_ROOT / "research/configs/phase1.yml")
+    cfg1 = _resolve_phase1(Path(args.phase1_config))
 
     # Resolve run-specific bw_cap + payload
     bw_cap_kbps, payload_bytes, run_label = _select_run_config(cfg, args.run_name)
+    if args.payload_bytes is not None:
+        payload_bytes = args.payload_bytes
 
     # CLI overrides
     if args.bw_cap is not None:
@@ -153,6 +167,10 @@ def main() -> None:
     BUFFER_SIZE: int = cfg.get("buffer_size", 3)
     STALENESS_ALPHA: float = cfg.get("staleness_alpha", 0.5)
     ROUND_BUDGET_S: float = cfg.get("connectivity", {}).get("round_budget_seconds", 300.0)
+    if args.buffer_size is not None:
+        BUFFER_SIZE = args.buffer_size
+    if args.round_budget is not None:
+        ROUND_BUDGET_S = args.round_budget
     CONN_SEED: int = cfg.get("connectivity", {}).get("seed", seed)
 
     torch.manual_seed(seed)
@@ -196,6 +214,16 @@ def main() -> None:
     # Load model config from a Phase 4 config (reuse DenseNet-121 settings)
     phase4_cfg_path = REPO_ROOT / "research/configs/phase4_async_bufferK_sweep.yml"
     cfg4 = _load_cfg(phase4_cfg_path)
+    if args.compression_method is not None:
+        compression = cfg4.setdefault("compression", {})
+        compression["enabled"] = args.compression_method != "none"
+        compression["method"] = args.compression_method
+    if args.topk_ratio is not None:
+        cfg4.setdefault("compression", {})["topk_ratio"] = args.topk_ratio
+    if args.quant_bits is not None:
+        cfg4.setdefault("compression", {})["quant_bits"] = args.quant_bits
+    if args.strategy == "sync_dropout":
+        cfg4.setdefault("async", {})["strategy"] = "sync_dropout"
     model_cfg = cfg4["model"]
     training_cfg = cfg4["training"]
     class_weights = cfg4["data"]["class_weights"]
@@ -266,11 +294,9 @@ def main() -> None:
     def on_fit_config_fn(server_round: int) -> dict:
         return {"round": server_round}
 
-    strategy = FedBuffStrategy(
-        buffer_size=BUFFER_SIZE,
-        staleness_alpha=STALENESS_ALPHA,
+    strategy_kwargs = dict(
         tracker=tracker,
-        dropout_sampler=bw_adapter,          # ← Phase 5 connectivity adapter
+        dropout_sampler=bw_adapter,
         fraction_fit=1.0,
         fraction_evaluate=0.0,
         min_fit_clients=max(1, NUM_CLIENTS),
@@ -279,6 +305,14 @@ def main() -> None:
         on_fit_config_fn=on_fit_config_fn,
         initial_parameters=initial_parameters,
     )
+    if args.strategy == "sync_dropout":
+        strategy = SyncWithDropout(**strategy_kwargs)
+    else:
+        strategy = FedBuffStrategy(
+            buffer_size=BUFFER_SIZE,
+            staleness_alpha=STALENESS_ALPHA,
+            **strategy_kwargs,
+        )
 
     # ── client_fn ─────────────────────────────────────────────────────────────
     def client_fn(context: fl.common.Context) -> fl.client.Client:
@@ -363,6 +397,47 @@ def main() -> None:
                   "test_covid_19_sensitivity", "test_loss"]:
             if k in final:
                 print(f"  {k:40s}: {final[k]:.4f}", flush=True)
+
+    if args.result_json:
+        result_path = Path(args.result_json)
+        result_path.parent.mkdir(parents=True, exist_ok=True)
+        final = {
+            k: float(v[-1][1])
+            for k, v in history.metrics_centralized.items()
+            if v
+        }
+        round_metrics = []
+        for round_number in sorted({r for values in history.metrics_centralized.values() for r, _ in values}):
+            row = {"round_number": int(round_number)}
+            for key, values in history.metrics_centralized.items():
+                row[key] = next((float(value) for r, value in values if r == round_number), None)
+            round_metrics.append(row)
+        result_path.write_text(json.dumps({
+            "run_label": run_label,
+            "seed": seed,
+            "strategy": args.strategy or "fedbuff",
+            "buffer_size": BUFFER_SIZE,
+            "bandwidth_cap_kbps": bw_cap_kbps,
+            "payload_bytes": payload_bytes,
+            "round_budget_seconds": ROUND_BUDGET_S,
+            "final_metrics": final,
+            "rounds": round_metrics,
+            "communication_rounds": tracker.rounds,
+            "communication": comms,
+            "client_connectivity": full_diag,
+            "client_events": [
+                {
+                    "client_index": cid,
+                    "round_number": round_number,
+                    "status": "dropped" if dropped else "participated",
+                    "effective_bandwidth": bw_adapter.bandwidth_log[cid][round_number],
+                }
+                for cid, drops in bw_adapter.dropout_log.items()
+                for round_number, dropped in enumerate(drops, start=1)
+            ],
+            "elapsed_seconds": elapsed,
+        }, indent=2), encoding="utf-8")
+        print(f"Structured result saved: {result_path}", flush=True)
 
     if mlflow_run_id and not args.no_tracking:
         mlflow.log_metrics(comms, step=NUM_ROUNDS)
