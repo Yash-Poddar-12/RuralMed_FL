@@ -101,7 +101,7 @@ def _command(spec: dict[str, Any], output: Path, config: dict[str, Any]) -> list
         "--buffer-size",
         str(spec["buffer_size"]),
         "--rounds",
-        str(config.get("num_rounds", 50)),
+        str(config.get("num_rounds", 30)),
         "--compression-method",
         compression.get("method", "none"),
         "--payload-bytes",

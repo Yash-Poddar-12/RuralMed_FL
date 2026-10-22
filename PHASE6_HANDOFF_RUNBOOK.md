@@ -257,16 +257,7 @@ retains:
 
 - Seed
 - Compression configuration
-- Aggregation strategy
-- Bandwidth condition
-- Dropout condition
-- Round-level global metrics
-- Communication statistics
-- Client connectivity events
-- Final metrics
-- Execution log
-
-The sweep can take a long time because every configuration performs actual
+- Aggregation strategylong time because every configuration performs actual
 federated DenseNet training. Keep the GPU machine awake and connected.
 
 ## 9. Generate Phase 6 summaries and plots
