@@ -1,0 +1,100 @@
+schema_version: 1
+experiment_name: phase8-ablations
+description: Focused ablations for the Phase 8 integration and final report.
+seeds: [42, 43, 44]
+output_dir: results/phase8/ablations
+
+# These are experiment specifications, not placeholder results. Each entry
+# must be executed with the existing Phase 2-5 implementation and then written
+# as a Phase 6-compatible result JSON before it is included in the report.
+ablations:
+  - id: iid_vs_non_iid
+    question: How much of the observed difficulty comes from non-IID clients?
+    control:
+      name: non_iid
+      source_phase: phase1
+      partition_mode: non_iid
+      strategy: fedavg
+    variant:
+      name: iid
+      source_phase: phase1
+      partition_mode: iid
+      strategy: fedavg
+    operating_points:
+      - compression: none
+        bandwidth_kbps: 2048
+        dropout_rate: 0.0
+
+  - id: error_feedback
+    question: Does residual error feedback improve top-k sparsification?
+    control:
+      name: error_feedback_on
+      source_phase: phase3
+      compression: topk_1pct
+      error_feedback: true
+    variant:
+      name: error_feedback_off
+      source_phase: phase3
+      compression: topk_1pct
+      error_feedback: false
+    operating_points:
+      - compression: topk_1pct
+        bandwidth_kbps: 512
+        dropout_rate: 0.25
+
+  - id: staleness_weighting
+    question: Does staleness-aware weighting improve buffered async aggregation?
+    control:
+      name: staleness_weighting_on
+      source_phase: phase4
+      strategy: fedbuff
+      staleness_weighting: true
+    variant:
+      name: staleness_weighting_off
+      source_phase: phase4
+      strategy: fedbuff
+      staleness_weighting: false
+    operating_points:
+      - compression: topk_1pct
+        bandwidth_kbps: 256
+        dropout_rate: 0.5
+
+  - id: connectivity_model
+    question: Does realistic connectivity change the conclusion versus simple dropout?
+    control:
+      name: trace_driven
+      source_phase: phase5
+      connectivity_model: markov_trace
+      strategy: fedbuff
+    variant:
+      name: simple_dropout
+      source_phase: phase4
+      connectivity_model: probability_dropout
+      strategy: fedbuff
+    operating_points:
+      - compression: topk_1pct
+        bandwidth_kbps: 256
+        dropout_rate: 0.5
+
+  - id: combined_system
+    question: Are gains additive when compression and async connectivity handling are combined?
+    control:
+      name: compression_only
+      source_phase: phase3
+      compression: topk_1pct
+      strategy: fedavg
+    variant:
+      name: compression_plus_async
+      source_phase: phase4
+      compression: topk_1pct
+      strategy: fedbuff
+    full_system:
+      name: compression_async_connectivity
+      source_phase: phase6
+      compression: topk_1pct
+      strategy: fedbuff
+      connectivity_model: markov_trace
+    operating_points:
+      - compression: topk_1pct
+        bandwidth_kbps: 256
+        dropout_rate: 0.5

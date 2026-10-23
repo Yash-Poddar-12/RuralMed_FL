@@ -1,0 +1,52 @@
+{
+  "status": "local_result_available",
+  "source_of_truth": "results/phase6/raw",
+  "supabase_match": {
+    "count": 1,
+    "final_metrics": {
+      "test_accuracy": 0.7666806988002526,
+      "test_macro_f1": 0.7679599247193233,
+      "test_macro_auroc": 0.9051405129315659,
+      "test_normal_f1": 0.8044838860345633,
+      "test_normal_sensitivity": 0.7812755148326227,
+      "test_pneumonia_f1": 0.6878879516154703,
+      "test_pneumonia_sensitivity": 0.773720014321518,
+      "test_covid_19_f1": 0.8115079365079365,
+      "test_covid_19_sensitivity": 0.683089770354906,
+      "test_loss": 0.7319341091150184,
+      "round": 30.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 16.6966344,
+      "comms/total_download_gb": 8.3483172,
+      "comms/total_upload_gb": 8.3483172,
+      "comms/baseline_total_gb": 16.6966344,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 30.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    "metrics_equal": true
+  },
+  "dashboard_match": "pending manual trace",
+  "run_label": "fedbuff_none_no_dropout_seed42",
+  "local_final_metrics": {
+    "test_accuracy": 0.7666806988002526,
+    "test_macro_f1": 0.7679599247193233,
+    "test_macro_auroc": 0.9051405129315659,
+    "test_normal_f1": 0.8044838860345633,
+    "test_normal_sensitivity": 0.7812755148326227,
+    "test_pneumonia_f1": 0.6878879516154703,
+    "test_pneumonia_sensitivity": 0.773720014321518,
+    "test_covid_19_f1": 0.8115079365079365,
+    "test_covid_19_sensitivity": 0.683089770354906,
+    "test_loss": 0.7319341091150184,
+    "round": 30.0,
+    "comms/model_bytes": 27827724.0,
+    "comms/total_gb": 16.6966344,
+    "comms/total_download_gb": 8.3483172,
+    "comms/total_upload_gb": 8.3483172,
+    "comms/baseline_total_gb": 16.6966344,
+    "comms/compression_ratio": 1.0,
+    "comms/rounds_completed": 30.0,
+    "comms/avg_gb_per_round": 0.55655448
+  }
+}

@@ -1,0 +1,9 @@
+source,run_label,seed,strategy,ablation,variant,test_accuracy,test_macro_auroc,test_macro_f1
+phase6,fedbuff_none_no_dropout_seed42,42,fedbuff,,,0.7666806988002526,0.9051405129315659,0.7679599247193233
+phase6,fedbuff_none_severe_dropout_seed42,42,fedbuff,,,0.769943169858977,0.9081997517277922,0.7842056541235021
+phase6,fedbuff_topk_10pct_severe_dropout_seed42,42,fedbuff,,,0.8181435487265839,0.9241191969611379,0.8432546716272413
+phase6,fedbuff_topk_1pct_extreme_dropout_seed42,42,fedbuff,,,0.7827825720900863,0.9254322697864219,0.8215780619391584
+phase6,fedbuff_topk_1pct_moderate_dropout_seed42,42,fedbuff,,,0.7980951378657125,0.9131133776587627,0.8125536751771553
+phase6,fedbuff_topk_1pct_no_dropout_seed42,42,fedbuff,,,0.7873079351715428,0.9024528526155965,0.8168104799551429
+phase6,fedbuff_topk_1pct_severe_dropout_seed42,42,fedbuff,,,0.8166701747000631,0.9256296539149281,0.8432420139726574
+phase6,sync_dropout_topk_1pct_moderate_dropout_seed42,42,sync_dropout,,,0.8080404125447275,0.9304354616118508,0.8402383102137634
