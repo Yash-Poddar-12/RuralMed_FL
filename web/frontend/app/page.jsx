@@ -35,44 +35,58 @@ export default function HomePage() {
   const best = experiments
     .map((experiment) => experiment.bestMacroAuroc)
     .filter((value) => value != null);
+  const completedRuns = experiments.reduce((sum, item) => sum + (item.completedCount || 0), 0);
+  const totalRuns = experiments.reduce((sum, item) => sum + (item.runCount || 0), 0);
 
   return (
     <main className="shell">
       <header className="topbar">
-        <div>
+        <Link href="/" className="brand-block">
           <p className="eyebrow">RURALMED / PHASE 07</p>
           <h1>Federated learning observatory</h1>
-        </div>
+        </Link>
+        <nav className="topnav" aria-label="Primary navigation">
+          <Link href="/heatmap">Joint metric</Link>
+          <Link href="/clients">Clinics</Link>
+        </nav>
         <span className="status-pill"><i /> Supabase connected</span>
       </header>
 
       <section className="hero">
         <div>
-          <p className="eyebrow">Communication-efficient diagnostic imaging</p>
-          <h2>See where the network changes the model.</h2>
+          <p className="eyebrow">Phase 6 experiment registry</p>
+          <h2>Model performance under real-world network constraints.</h2>
           <p className="lede">
-            Explore Phase 6 sweeps across compression, aggregation, bandwidth,
+            A compact view of compression, asynchronous aggregation, bandwidth,
             and intermittent rural connectivity.
           </p>
         </div>
-        <Link className="primary-button" href="/heatmap">Open joint metric <span>↗</span></Link>
+        <Link className="primary-button" href="/heatmap">View joint metric <span>→</span></Link>
       </section>
 
       {error && <div className="alert">{error}. Start the API and verify Supabase credentials.</div>}
 
       <section className="metrics-grid">
         <Metric label="Experiments" value={experiments.length} />
-        <Metric label="Completed runs" value={experiments.reduce((sum, item) => sum + (item.completedCount || 0), 0)} />
+        <Metric label="Completed runs" value={completedRuns ? `${completedRuns}/${totalRuns}` : null} />
         <Metric label="Best macro-AUROC" value={best.length ? Math.max(...best).toFixed(4) : null} />
         <Metric label="Simulated clinics" value={clients.length || null} />
       </section>
 
-      <section className="section-heading">
-        <div>
-          <p className="eyebrow">Experiment registry</p>
-          <h3>Phase 6 sweeps</h3>
+      <section className="overview-grid">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Experiment registry</p>
+            <h3>Phase 6 sweeps</h3>
+          </div>
+          <span className="muted">Live from Supabase</span>
         </div>
-        <Link href="/clients" className="text-link">Explore clinics →</Link>
+        <div className="overview-aside">
+          <p className="eyebrow">Explore the evidence</p>
+          <Link href="/heatmap" className="aside-link"><span>Joint metric</span><b>→</b></Link>
+          <Link href="/clients" className="aside-link"><span>Clinic explorer</span><b>→</b></Link>
+          <p className="aside-note">Compare the network conditions behind each global result.</p>
+        </div>
       </section>
 
       <section className="experiment-list">
