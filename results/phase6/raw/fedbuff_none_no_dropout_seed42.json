@@ -1,0 +1,2820 @@
+{
+  "run_label": "bw_uncapped_topk1pct",
+  "seed": 42,
+  "strategy": "fedbuff",
+  "buffer_size": 3,
+  "bandwidth_cap_kbps": 2048.0,
+  "payload_bytes": 86000000,
+  "round_budget_seconds": 300.0,
+  "final_metrics": {
+    "test_accuracy": 0.7666806988002526,
+    "test_macro_f1": 0.7679599247193233,
+    "test_macro_auroc": 0.9051405129315659,
+    "test_normal_f1": 0.8044838860345633,
+    "test_normal_sensitivity": 0.7812755148326227,
+    "test_pneumonia_f1": 0.6878879516154703,
+    "test_pneumonia_sensitivity": 0.773720014321518,
+    "test_covid_19_f1": 0.8115079365079365,
+    "test_covid_19_sensitivity": 0.683089770354906,
+    "test_loss": 0.7319341091150184,
+    "round": 30.0,
+    "comms/model_bytes": 27827724.0,
+    "comms/total_gb": 16.6966344,
+    "comms/total_download_gb": 8.3483172,
+    "comms/total_upload_gb": 8.3483172,
+    "comms/baseline_total_gb": 16.6966344,
+    "comms/compression_ratio": 1.0,
+    "comms/rounds_completed": 30.0,
+    "comms/avg_gb_per_round": 0.55655448
+  },
+  "rounds": [
+    {
+      "round_number": 0,
+      "test_accuracy": 0.2939381182908861,
+      "test_macro_f1": 0.15144367629117528,
+      "test_macro_auroc": 0.46611568771327394,
+      "test_normal_f1": 0.0,
+      "test_normal_sensitivity": 0.0,
+      "test_pneumonia_f1": 0.45433102887352583,
+      "test_pneumonia_sensitivity": 1.0,
+      "test_covid_19_f1": 0.0,
+      "test_covid_19_sensitivity": 0.0,
+      "test_loss": 1.4728508426675895,
+      "round": 0.0,
+      "comms/model_bytes": null,
+      "comms/total_gb": null,
+      "comms/total_download_gb": null,
+      "comms/total_upload_gb": null,
+      "comms/baseline_total_gb": null,
+      "comms/compression_ratio": null,
+      "comms/rounds_completed": null,
+      "comms/avg_gb_per_round": null
+    },
+    {
+      "round_number": 1,
+      "test_accuracy": 0.6247105872447906,
+      "test_macro_f1": 0.4424026095609628,
+      "test_macro_auroc": 0.8661886698713951,
+      "test_normal_f1": 0.7216254313906577,
+      "test_normal_sensitivity": 0.6734101424294656,
+      "test_pneumonia_f1": 0.5898408894214766,
+      "test_pneumonia_sensitivity": 0.7930540637307555,
+      "test_covid_19_f1": 0.015741507870753936,
+      "test_covid_19_sensitivity": 0.007933194154488519,
+      "test_loss": 0.9158752684692563,
+      "round": 1.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 0.55655448,
+      "comms/total_download_gb": 0.27827724,
+      "comms/total_upload_gb": 0.27827724,
+      "comms/baseline_total_gb": 0.55655448,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 1.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 2,
+      "test_accuracy": 0.7375815617764682,
+      "test_macro_f1": 0.7681390311540248,
+      "test_macro_auroc": 0.9035980729654414,
+      "test_normal_f1": 0.7639868120720263,
+      "test_normal_sensitivity": 0.6832078381565817,
+      "test_pneumonia_f1": 0.6504994932676994,
+      "test_pneumonia_sensitivity": 0.8043322592194773,
+      "test_covid_19_f1": 0.8899307881223487,
+      "test_covid_19_sensitivity": 0.8321503131524008,
+      "test_loss": 0.5852480173186236,
+      "round": 2.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 1.11310896,
+      "comms/total_download_gb": 0.55655448,
+      "comms/total_upload_gb": 0.55655448,
+      "comms/baseline_total_gb": 1.11310896,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 2.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 3,
+      "test_accuracy": 0.7789938960218902,
+      "test_macro_f1": 0.7945733246638951,
+      "test_macro_auroc": 0.907240409883174,
+      "test_normal_f1": 0.8068247541931752,
+      "test_normal_sensitivity": 0.7593214188514923,
+      "test_pneumonia_f1": 0.6796310147095488,
+      "test_pneumonia_sensitivity": 0.7320085929108485,
+      "test_covid_19_f1": 0.8972642050889612,
+      "test_covid_19_sensitivity": 0.9791231732776617,
+      "test_loss": 0.4691394467123983,
+      "round": 3.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 1.66966344,
+      "comms/total_download_gb": 0.83483172,
+      "comms/total_upload_gb": 0.83483172,
+      "comms/baseline_total_gb": 1.66966344,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 3.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 4,
+      "test_accuracy": 0.7418438223531888,
+      "test_macro_f1": 0.7401316841273546,
+      "test_macro_auroc": 0.9010289503491139,
+      "test_normal_f1": 0.7895248275191915,
+      "test_normal_sensitivity": 0.7370951646557199,
+      "test_pneumonia_f1": 0.6610897246076399,
+      "test_pneumonia_sensitivity": 0.7993197278911565,
+      "test_covid_19_f1": 0.7697805002552323,
+      "test_covid_19_sensitivity": 0.6296450939457202,
+      "test_loss": 0.6691809402242808,
+      "round": 4.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 2.22621792,
+      "comms/total_download_gb": 1.11310896,
+      "comms/total_upload_gb": 1.11310896,
+      "comms/baseline_total_gb": 2.22621792,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 4.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 5,
+      "test_accuracy": 0.8033045674594822,
+      "test_macro_f1": 0.8281579223752219,
+      "test_macro_auroc": 0.9174737754140714,
+      "test_normal_f1": 0.8274398868458275,
+      "test_normal_sensitivity": 0.7960627778281775,
+      "test_pneumonia_f1": 0.6932613645947542,
+      "test_pneumonia_sensitivity": 0.7357679914070892,
+      "test_covid_19_f1": 0.963772515685084,
+      "test_covid_19_sensitivity": 0.9941544885177453,
+      "test_loss": 0.438593675740968,
+      "round": 5.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 2.7827724,
+      "comms/total_download_gb": 1.3913862,
+      "comms/total_upload_gb": 1.3913862,
+      "comms/baseline_total_gb": 2.7827724,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 5.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 6,
+      "test_accuracy": 0.8069353820248368,
+      "test_macro_f1": 0.8262094477441981,
+      "test_macro_auroc": 0.9120066719063725,
+      "test_normal_f1": 0.8363969745587898,
+      "test_normal_sensitivity": 0.8276331307266624,
+      "test_pneumonia_f1": 0.6834161931818182,
+      "test_pneumonia_sensitivity": 0.6890440386680988,
+      "test_covid_19_f1": 0.9588151754919862,
+      "test_covid_19_sensitivity": 0.9866388308977035,
+      "test_loss": 0.4500536329744741,
+      "round": 6.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 3.33932688,
+      "comms/total_download_gb": 1.66966344,
+      "comms/total_upload_gb": 1.66966344,
+      "comms/baseline_total_gb": 3.33932688,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 6.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 7,
+      "test_accuracy": 0.7672069038097242,
+      "test_macro_f1": 0.8043076645388328,
+      "test_macro_auroc": 0.9116385341835471,
+      "test_normal_f1": 0.7838798498122653,
+      "test_normal_sensitivity": 0.7102422208110315,
+      "test_pneumonia_f1": 0.6741182690129144,
+      "test_pneumonia_sensitivity": 0.7989616899391335,
+      "test_covid_19_f1": 0.9549248747913188,
+      "test_covid_19_sensitivity": 0.9553235908141963,
+      "test_loss": 0.47802015430825406,
+      "round": 7.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 3.89588136,
+      "comms/total_download_gb": 1.94794068,
+      "comms/total_upload_gb": 1.94794068,
+      "comms/baseline_total_gb": 3.89588136,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 7.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 8,
+      "test_accuracy": 0.8084087560513576,
+      "test_macro_f1": 0.8276614118417536,
+      "test_macro_auroc": 0.9135203760340875,
+      "test_normal_f1": 0.8356742224076392,
+      "test_normal_sensitivity": 0.8177447155946657,
+      "test_pneumonia_f1": 0.6933100131176213,
+      "test_pneumonia_sensitivity": 0.7096312209094164,
+      "test_covid_19_f1": 0.954,
+      "test_covid_19_sensitivity": 0.9958246346555324,
+      "test_loss": 0.44700795028165025,
+      "round": 8.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 4.45243584,
+      "comms/total_download_gb": 2.22621792,
+      "comms/total_upload_gb": 2.22621792,
+      "comms/baseline_total_gb": 4.45243584,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 8.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 9,
+      "test_accuracy": 0.806040833508735,
+      "test_macro_f1": 0.8359665607638526,
+      "test_macro_auroc": 0.924918024282443,
+      "test_normal_f1": 0.8254454876413106,
+      "test_normal_sensitivity": 0.7816383924521455,
+      "test_pneumonia_f1": 0.7055374592833876,
+      "test_pneumonia_sensitivity": 0.7755102040816326,
+      "test_covid_19_f1": 0.9769167353668591,
+      "test_covid_19_sensitivity": 0.9895615866388309,
+      "test_loss": 0.44811375458299224,
+      "round": 9.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 5.00899032,
+      "comms/total_download_gb": 2.50449516,
+      "comms/total_upload_gb": 2.50449516,
+      "comms/baseline_total_gb": 5.00899032,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 9.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 10,
+      "test_accuracy": 0.8154599031782782,
+      "test_macro_f1": 0.83834606294308,
+      "test_macro_auroc": 0.9236819246711016,
+      "test_normal_f1": 0.8387247569184741,
+      "test_normal_sensitivity": 0.8138437811847954,
+      "test_pneumonia_f1": 0.7092804648777987,
+      "test_pneumonia_sensitivity": 0.7429287504475475,
+      "test_covid_19_f1": 0.967032967032967,
+      "test_covid_19_sensitivity": 0.9920668058455114,
+      "test_loss": 0.43895438361785155,
+      "round": 10.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 5.5655448,
+      "comms/total_download_gb": 2.7827724,
+      "comms/total_upload_gb": 2.7827724,
+      "comms/baseline_total_gb": 5.5655448,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 10.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 11,
+      "test_accuracy": 0.8076720690380973,
+      "test_macro_f1": 0.8118712752169751,
+      "test_macro_auroc": 0.9171058067333359,
+      "test_normal_f1": 0.8444092827004219,
+      "test_normal_sensitivity": 0.8714506032840424,
+      "test_pneumonia_f1": 0.6965283502793808,
+      "test_pneumonia_sensitivity": 0.6806301467955603,
+      "test_covid_19_f1": 0.8946761926711224,
+      "test_covid_19_sensitivity": 0.8104384133611691,
+      "test_loss": 0.5586500493282269,
+      "round": 11.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 6.12209928,
+      "comms/total_download_gb": 3.06104964,
+      "comms/total_upload_gb": 3.06104964,
+      "comms/baseline_total_gb": 6.12209928,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 11.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 12,
+      "test_accuracy": 0.8101978530835614,
+      "test_macro_f1": 0.8370417453457032,
+      "test_macro_auroc": 0.9198207567128415,
+      "test_normal_f1": 0.8342666728375063,
+      "test_normal_sensitivity": 0.817653996189785,
+      "test_pneumonia_f1": 0.6925935528476364,
+      "test_pneumonia_sensitivity": 0.717329036877909,
+      "test_covid_19_f1": 0.9842650103519669,
+      "test_covid_19_sensitivity": 0.9924843423799582,
+      "test_loss": 0.42229292235156657,
+      "round": 12.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 6.67865376,
+      "comms/total_download_gb": 3.33932688,
+      "comms/total_upload_gb": 3.33932688,
+      "comms/baseline_total_gb": 6.67865376,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 12.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 13,
+      "test_accuracy": 0.8063565565144181,
+      "test_macro_f1": 0.8169012826186656,
+      "test_macro_auroc": 0.9198212866451314,
+      "test_normal_f1": 0.8356402195842912,
+      "test_normal_sensitivity": 0.807856300462669,
+      "test_pneumonia_f1": 0.7036519308055216,
+      "test_pneumonia_sensitivity": 0.7209094163981382,
+      "test_covid_19_f1": 0.911411697466184,
+      "test_covid_19_sensitivity": 0.9987473903966597,
+      "test_loss": 0.4835314391613308,
+      "round": 13.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 7.23520824,
+      "comms/total_download_gb": 3.61760412,
+      "comms/total_upload_gb": 3.61760412,
+      "comms/baseline_total_gb": 7.23520824,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 13.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 14,
+      "test_accuracy": 0.7751525994527468,
+      "test_macro_f1": 0.8098915752700013,
+      "test_macro_auroc": 0.9216164483285457,
+      "test_normal_f1": 0.7941951195268625,
+      "test_normal_sensitivity": 0.7248480449968249,
+      "test_pneumonia_f1": 0.6832815695780623,
+      "test_pneumonia_sensitivity": 0.807375581811672,
+      "test_covid_19_f1": 0.952198036705079,
+      "test_covid_19_sensitivity": 0.9315240083507307,
+      "test_loss": 0.4734050607937207,
+      "round": 14.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 7.79176272,
+      "comms/total_download_gb": 3.89588136,
+      "comms/total_upload_gb": 3.89588136,
+      "comms/baseline_total_gb": 7.79176272,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 14.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 15,
+      "test_accuracy": 0.8196695432540517,
+      "test_macro_f1": 0.8431064435964167,
+      "test_macro_auroc": 0.924011399648876,
+      "test_normal_f1": 0.8433456561922366,
+      "test_normal_sensitivity": 0.8278145695364238,
+      "test_pneumonia_f1": 0.7076949860724234,
+      "test_pneumonia_sensitivity": 0.7277121374865736,
+      "test_covid_19_f1": 0.9782786885245902,
+      "test_covid_19_sensitivity": 0.9966597077244259,
+      "test_loss": 0.4100172468246447,
+      "round": 15.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 8.3483172,
+      "comms/total_download_gb": 4.1741586,
+      "comms/total_upload_gb": 4.1741586,
+      "comms/baseline_total_gb": 8.3483172,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 15.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 16,
+      "test_accuracy": 0.8385076825931382,
+      "test_macro_f1": 0.8527468221754759,
+      "test_macro_auroc": 0.924238152718623,
+      "test_normal_f1": 0.8673122219314315,
+      "test_normal_sensitivity": 0.901932323323959,
+      "test_pneumonia_f1": 0.7057106722443818,
+      "test_pneumonia_sensitivity": 0.6493018259935553,
+      "test_covid_19_f1": 0.9852175723506142,
+      "test_covid_19_sensitivity": 0.9878914405010438,
+      "test_loss": 0.4528401434873185,
+      "round": 16.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 8.90487168,
+      "comms/total_download_gb": 4.45243584,
+      "comms/total_upload_gb": 4.45243584,
+      "comms/baseline_total_gb": 8.90487168,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 16.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 17,
+      "test_accuracy": 0.8208798147758367,
+      "test_macro_f1": 0.8473889277151306,
+      "test_macro_auroc": 0.9273088296689433,
+      "test_normal_f1": 0.8432662897395495,
+      "test_normal_sensitivity": 0.8253651456046448,
+      "test_pneumonia_f1": 0.7101598762248582,
+      "test_pneumonia_sensitivity": 0.7395273899033298,
+      "test_covid_19_f1": 0.9887406171809842,
+      "test_covid_19_sensitivity": 0.9899791231732776,
+      "test_loss": 0.41548850853878233,
+      "round": 17.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 9.46142616,
+      "comms/total_download_gb": 4.73071308,
+      "comms/total_upload_gb": 4.73071308,
+      "comms/baseline_total_gb": 9.46142616,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 17.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 18,
+      "test_accuracy": 0.8304567459482214,
+      "test_macro_f1": 0.8485669732250752,
+      "test_macro_auroc": 0.9280651609032059,
+      "test_normal_f1": 0.8586396811892715,
+      "test_normal_sensitivity": 0.8698176539961898,
+      "test_pneumonia_f1": 0.7099717179089499,
+      "test_pneumonia_sensitivity": 0.69656283566058,
+      "test_covid_19_f1": 0.9770895205770047,
+      "test_covid_19_sensitivity": 0.9615866388308977,
+      "test_loss": 0.4339101985990813,
+      "round": 18.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 10.01798064,
+      "comms/total_download_gb": 5.00899032,
+      "comms/total_upload_gb": 5.00899032,
+      "comms/baseline_total_gb": 10.01798064,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 18.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 19,
+      "test_accuracy": 0.8180383077246896,
+      "test_macro_f1": 0.8414065174087421,
+      "test_macro_auroc": 0.9228636839240268,
+      "test_normal_f1": 0.8443307913603361,
+      "test_normal_sensitivity": 0.8387008981221084,
+      "test_pneumonia_f1": 0.6994718309859155,
+      "test_pneumonia_sensitivity": 0.7112423916935195,
+      "test_covid_19_f1": 0.9804169298799748,
+      "test_covid_19_sensitivity": 0.9720250521920668,
+      "test_loss": 0.42300106819944117,
+      "round": 19.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 10.57453512,
+      "comms/total_download_gb": 5.28726756,
+      "comms/total_upload_gb": 5.28726756,
+      "comms/baseline_total_gb": 10.57453512,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 19.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 20,
+      "test_accuracy": 0.7918332982529994,
+      "test_macro_f1": 0.8249344518694196,
+      "test_macro_auroc": 0.9208867531530126,
+      "test_normal_f1": 0.8118134515320871,
+      "test_normal_sensitivity": 0.7643109861199311,
+      "test_pneumonia_f1": 0.6877660856293678,
+      "test_pneumonia_sensitivity": 0.7663802363050484,
+      "test_covid_19_f1": 0.9752238184468041,
+      "test_covid_19_sensitivity": 0.9778705636743215,
+      "test_loss": 0.4262364417396077,
+      "round": 20.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 11.1310896,
+      "comms/total_download_gb": 5.5655448,
+      "comms/total_upload_gb": 5.5655448,
+      "comms/baseline_total_gb": 11.1310896,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 20.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 21,
+      "test_accuracy": 0.7155335718796043,
+      "test_macro_f1": 0.742741736289716,
+      "test_macro_auroc": 0.9067381450817966,
+      "test_normal_f1": 0.7280270436385986,
+      "test_normal_sensitivity": 0.6447428104871632,
+      "test_pneumonia_f1": 0.6638345288669127,
+      "test_pneumonia_sensitivity": 0.8532044396706051,
+      "test_covid_19_f1": 0.8363636363636363,
+      "test_covid_19_sensitivity": 0.7202505219206681,
+      "test_loss": 0.7157636526960294,
+      "round": 21.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 11.68764408,
+      "comms/total_download_gb": 5.84382204,
+      "comms/total_upload_gb": 5.84382204,
+      "comms/baseline_total_gb": 11.68764408,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 21.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 22,
+      "test_accuracy": 0.7886760681961692,
+      "test_macro_f1": 0.8268841721614383,
+      "test_macro_auroc": 0.9261108408162254,
+      "test_normal_f1": 0.8042892816922098,
+      "test_normal_sensitivity": 0.7450784722852218,
+      "test_pneumonia_f1": 0.6901881195847319,
+      "test_pneumonia_sensitivity": 0.7914428929466524,
+      "test_covid_19_f1": 0.9861751152073732,
+      "test_covid_19_sensitivity": 0.9828810020876827,
+      "test_loss": 0.4166969476160665,
+      "round": 22.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 12.24419856,
+      "comms/total_download_gb": 6.12209928,
+      "comms/total_upload_gb": 6.12209928,
+      "comms/baseline_total_gb": 12.24419856,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 22.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 23,
+      "test_accuracy": 0.7671016628078299,
+      "test_macro_f1": 0.7938497644671348,
+      "test_macro_auroc": 0.9166285474870035,
+      "test_normal_f1": 0.790162980209546,
+      "test_normal_sensitivity": 0.7389095527533339,
+      "test_pneumonia_f1": 0.6826678975305793,
+      "test_pneumonia_sensitivity": 0.7943071965628357,
+      "test_covid_19_f1": 0.9087184156612793,
+      "test_covid_19_sensitivity": 0.8334029227557411,
+      "test_loss": 0.5531475417515123,
+      "round": 23.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 12.80075304,
+      "comms/total_download_gb": 6.40037652,
+      "comms/total_upload_gb": 6.40037652,
+      "comms/baseline_total_gb": 12.80075304,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 23.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 24,
+      "test_accuracy": 0.8175121027152179,
+      "test_macro_f1": 0.8441034693848745,
+      "test_macro_auroc": 0.9265456361798124,
+      "test_normal_f1": 0.840368842963718,
+      "test_normal_sensitivity": 0.8226435634582238,
+      "test_pneumonia_f1": 0.7066289340536832,
+      "test_pneumonia_sensitivity": 0.7375581811672037,
+      "test_covid_19_f1": 0.985312631137222,
+      "test_covid_19_sensitivity": 0.9803757828810021,
+      "test_loss": 0.4483685934168493,
+      "round": 24.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 13.35730752,
+      "comms/total_download_gb": 6.67865376,
+      "comms/total_upload_gb": 6.67865376,
+      "comms/baseline_total_gb": 13.35730752,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 24.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 25,
+      "test_accuracy": 0.814144390654599,
+      "test_macro_f1": 0.830290785189007,
+      "test_macro_auroc": 0.9193608282633411,
+      "test_normal_f1": 0.8428327880938119,
+      "test_normal_sensitivity": 0.8297196770389186,
+      "test_pneumonia_f1": 0.6985365853658536,
+      "test_pneumonia_sensitivity": 0.7049767275331185,
+      "test_covid_19_f1": 0.9495029821073558,
+      "test_covid_19_sensitivity": 0.9970772442588727,
+      "test_loss": 0.5059855124732615,
+      "round": 25.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 13.913862,
+      "comms/total_download_gb": 6.956931,
+      "comms/total_upload_gb": 6.956931,
+      "comms/baseline_total_gb": 13.913862,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 25.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 26,
+      "test_accuracy": 0.7970953483477162,
+      "test_macro_f1": 0.8299962128364967,
+      "test_macro_auroc": 0.9220620711773434,
+      "test_normal_f1": 0.8174045947365908,
+      "test_normal_sensitivity": 0.776285947564184,
+      "test_pneumonia_f1": 0.6919769611422082,
+      "test_pneumonia_sensitivity": 0.763515932688865,
+      "test_covid_19_f1": 0.9806070826306914,
+      "test_covid_19_sensitivity": 0.9711899791231733,
+      "test_loss": 0.5262137024220956,
+      "round": 26.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 14.47041648,
+      "comms/total_download_gb": 7.23520824,
+      "comms/total_upload_gb": 7.23520824,
+      "comms/baseline_total_gb": 14.47041648,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 26.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 27,
+      "test_accuracy": 0.7695222058513997,
+      "test_macro_f1": 0.8025613770487098,
+      "test_macro_auroc": 0.9071911112588823,
+      "test_normal_f1": 0.7950328565906455,
+      "test_normal_sensitivity": 0.7463485439535517,
+      "test_pneumonia_f1": 0.662945200094347,
+      "test_pneumonia_sensitivity": 0.7547440028643037,
+      "test_covid_19_f1": 0.9497060744611365,
+      "test_covid_19_sensitivity": 0.9106471816283925,
+      "test_loss": 0.5938524457937139,
+      "round": 27.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 15.02697096,
+      "comms/total_download_gb": 7.51348548,
+      "comms/total_upload_gb": 7.51348548,
+      "comms/baseline_total_gb": 15.02697096,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 27.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 28,
+      "test_accuracy": 0.8328772889917913,
+      "test_macro_f1": 0.8520065380077951,
+      "test_macro_auroc": 0.9239711266586474,
+      "test_normal_f1": 0.8594584966156038,
+      "test_normal_sensitivity": 0.8754422570987934,
+      "test_pneumonia_f1": 0.7089171383501902,
+      "test_pneumonia_sensitivity": 0.6838524883637666,
+      "test_covid_19_f1": 0.9876439790575916,
+      "test_covid_19_sensitivity": 0.9845511482254697,
+      "test_loss": 0.5272616337560598,
+      "round": 28.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 15.58352544,
+      "comms/total_download_gb": 7.79176272,
+      "comms/total_upload_gb": 7.79176272,
+      "comms/baseline_total_gb": 15.58352544,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 28.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 29,
+      "test_accuracy": 0.7757840454641128,
+      "test_macro_f1": 0.8090678755100459,
+      "test_macro_auroc": 0.9064073454154973,
+      "test_normal_f1": 0.800076379606645,
+      "test_normal_sensitivity": 0.7602286129002994,
+      "test_pneumonia_f1": 0.6631076599530858,
+      "test_pneumonia_sensitivity": 0.7337987826709631,
+      "test_covid_19_f1": 0.9640195869704067,
+      "test_covid_19_sensitivity": 0.9453027139874739,
+      "test_loss": 0.657687654566248,
+      "round": 29.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 16.14007992,
+      "comms/total_download_gb": 8.07003996,
+      "comms/total_upload_gb": 8.07003996,
+      "comms/baseline_total_gb": 16.14007992,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 29.0,
+      "comms/avg_gb_per_round": 0.55655448
+    },
+    {
+      "round_number": 30,
+      "test_accuracy": 0.7666806988002526,
+      "test_macro_f1": 0.7679599247193233,
+      "test_macro_auroc": 0.9051405129315659,
+      "test_normal_f1": 0.8044838860345633,
+      "test_normal_sensitivity": 0.7812755148326227,
+      "test_pneumonia_f1": 0.6878879516154703,
+      "test_pneumonia_sensitivity": 0.773720014321518,
+      "test_covid_19_f1": 0.8115079365079365,
+      "test_covid_19_sensitivity": 0.683089770354906,
+      "test_loss": 0.7319341091150184,
+      "round": 30.0,
+      "comms/model_bytes": 27827724.0,
+      "comms/total_gb": 16.6966344,
+      "comms/total_download_gb": 8.3483172,
+      "comms/total_upload_gb": 8.3483172,
+      "comms/baseline_total_gb": 16.6966344,
+      "comms/compression_ratio": 1.0,
+      "comms/rounds_completed": 30.0,
+      "comms/avg_gb_per_round": 0.55655448
+    }
+  ],
+  "communication_rounds": [
+    {
+      "round": 1,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 2,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 3,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 4,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 5,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 6,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 7,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 8,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 9,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 10,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 11,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 12,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 13,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 14,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 15,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 16,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 17,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 18,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 19,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 20,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 21,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 22,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 23,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 24,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 25,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 26,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 27,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 28,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 29,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 30,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    }
+  ],
+  "communication": {
+    "comms/model_bytes": 27827724,
+    "comms/total_gb": 16.6966344,
+    "comms/total_download_gb": 8.3483172,
+    "comms/total_upload_gb": 8.3483172,
+    "comms/baseline_total_gb": 16.6966344,
+    "comms/compression_ratio": 1.0,
+    "comms/rounds_completed": 30,
+    "comms/avg_gb_per_round": 0.55655448
+  },
+  "client_connectivity": {
+    "run_label": "bw_uncapped_topk1pct",
+    "bw_cap_kbps": 2048.0,
+    "payload_bytes": 86000000,
+    "round_budget_s": 300.0,
+    "uptime/client_01": 0.0,
+    "uptime/client_06": 0.0,
+    "uptime/client_00": 0.0,
+    "uptime/client_02": 0.0,
+    "uptime/client_08": 0.0,
+    "uptime/client_04": 0.0,
+    "uptime/client_09": 0.0,
+    "uptime/client_03": 0.0,
+    "uptime/client_07": 0.0,
+    "uptime/client_05": 0.0,
+    "avg_bw_kbps/client_01": 1286.6525678336031,
+    "avg_bw_kbps/client_06": 1152.091609056804,
+    "avg_bw_kbps/client_00": 1400.0564698924438,
+    "avg_bw_kbps/client_02": 1823.6905613088304,
+    "avg_bw_kbps/client_08": 725.5785360919654,
+    "avg_bw_kbps/client_04": 999.8841968287114,
+    "avg_bw_kbps/client_09": 525.8327093435871,
+    "avg_bw_kbps/client_03": 1494.0617901139863,
+    "avg_bw_kbps/client_07": 1112.1585547624472,
+    "avg_bw_kbps/client_05": 1081.5531579160433,
+    "connectivity/uptime_client_00": 0.8666666666666667,
+    "connectivity/uptime_client_01": 0.5333333333333333,
+    "connectivity/uptime_client_02": 1.0,
+    "connectivity/uptime_client_03": 0.9666666666666667,
+    "connectivity/uptime_client_04": 0.5666666666666667,
+    "connectivity/uptime_client_05": 0.5666666666666667,
+    "connectivity/uptime_client_06": 0.8333333333333334,
+    "connectivity/uptime_client_07": 0.7666666666666667,
+    "connectivity/uptime_client_08": 0.6333333333333333,
+    "connectivity/uptime_client_09": 0.26666666666666666
+  },
+  "client_events": [
+    {
+      "client_index": 1,
+      "round_number": 1,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 1,
+      "round_number": 2,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 1,
+      "round_number": 3,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 1,
+      "round_number": 4,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 1,
+      "round_number": 5,
+      "status": "dropped",
+      "effective_bandwidth": 144.48345849995098
+    },
+    {
+      "client_index": 1,
+      "round_number": 6,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 1,
+      "round_number": 7,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 1,
+      "round_number": 8,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 1,
+      "round_number": 9,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 1,
+      "round_number": 10,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 1,
+      "round_number": 11,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 1,
+      "round_number": 12,
+      "status": "dropped",
+      "effective_bandwidth": 364.67098380903246
+    },
+    {
+      "client_index": 1,
+      "round_number": 13,
+      "status": "dropped",
+      "effective_bandwidth": 419.46888067915125
+    },
+    {
+      "client_index": 1,
+      "round_number": 14,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 1,
+      "round_number": 15,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 1,
+      "round_number": 16,
+      "status": "dropped",
+      "effective_bandwidth": 196.16334870577546
+    },
+    {
+      "client_index": 1,
+      "round_number": 17,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 1,
+      "round_number": 18,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 1,
+      "round_number": 19,
+      "status": "dropped",
+      "effective_bandwidth": 89.58866740185533
+    },
+    {
+      "client_index": 1,
+      "round_number": 20,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 1,
+      "round_number": 21,
+      "status": "dropped",
+      "effective_bandwidth": 1442.0290292422892
+    },
+    {
+      "client_index": 1,
+      "round_number": 22,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 1,
+      "round_number": 23,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 1,
+      "round_number": 24,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 1,
+      "round_number": 25,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 1,
+      "round_number": 26,
+      "status": "dropped",
+      "effective_bandwidth": 1359.0629787486387
+    },
+    {
+      "client_index": 1,
+      "round_number": 27,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 1,
+      "round_number": 28,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 1,
+      "round_number": 29,
+      "status": "dropped",
+      "effective_bandwidth": 186.97373825096093
+    },
+    {
+      "client_index": 1,
+      "round_number": 30,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 6,
+      "round_number": 1,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 6,
+      "round_number": 2,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 6,
+      "round_number": 3,
+      "status": "dropped",
+      "effective_bandwidth": 1308.1331225281774
+    },
+    {
+      "client_index": 6,
+      "round_number": 4,
+      "status": "dropped",
+      "effective_bandwidth": 466.52706209729223
+    },
+    {
+      "client_index": 6,
+      "round_number": 5,
+      "status": "dropped",
+      "effective_bandwidth": 458.9140031632903
+    },
+    {
+      "client_index": 6,
+      "round_number": 6,
+      "status": "dropped",
+      "effective_bandwidth": 301.2694641939022
+    },
+    {
+      "client_index": 6,
+      "round_number": 7,
+      "status": "dropped",
+      "effective_bandwidth": 1529.0441516753003
+    },
+    {
+      "client_index": 6,
+      "round_number": 8,
+      "status": "dropped",
+      "effective_bandwidth": 256.3025524653243
+    },
+    {
+      "client_index": 6,
+      "round_number": 9,
+      "status": "dropped",
+      "effective_bandwidth": 266.9534722241772
+    },
+    {
+      "client_index": 6,
+      "round_number": 10,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 6,
+      "round_number": 11,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 6,
+      "round_number": 12,
+      "status": "dropped",
+      "effective_bandwidth": 288.0846409481897
+    },
+    {
+      "client_index": 6,
+      "round_number": 13,
+      "status": "dropped",
+      "effective_bandwidth": 84.69477334147385
+    },
+    {
+      "client_index": 6,
+      "round_number": 14,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 6,
+      "round_number": 15,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 6,
+      "round_number": 16,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 6,
+      "round_number": 17,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 6,
+      "round_number": 18,
+      "status": "dropped",
+      "effective_bandwidth": 477.33641521672314
+    },
+    {
+      "client_index": 6,
+      "round_number": 19,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 6,
+      "round_number": 20,
+      "status": "dropped",
+      "effective_bandwidth": 204.37965324595143
+    },
+    {
+      "client_index": 6,
+      "round_number": 21,
+      "status": "dropped",
+      "effective_bandwidth": 375.18462681891987
+    },
+    {
+      "client_index": 6,
+      "round_number": 22,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 6,
+      "round_number": 23,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 6,
+      "round_number": 24,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 6,
+      "round_number": 25,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 6,
+      "round_number": 26,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 6,
+      "round_number": 27,
+      "status": "dropped",
+      "effective_bandwidth": 113.38945623261569
+    },
+    {
+      "client_index": 6,
+      "round_number": 28,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 6,
+      "round_number": 29,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 6,
+      "round_number": 30,
+      "status": "dropped",
+      "effective_bandwidth": 144.0768322687582
+    },
+    {
+      "client_index": 0,
+      "round_number": 1,
+      "status": "dropped",
+      "effective_bandwidth": 1247.3247949228335
+    },
+    {
+      "client_index": 0,
+      "round_number": 2,
+      "status": "dropped",
+      "effective_bandwidth": 1774.1761769181917
+    },
+    {
+      "client_index": 0,
+      "round_number": 3,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 0,
+      "round_number": 4,
+      "status": "dropped",
+      "effective_bandwidth": 364.68704855305634
+    },
+    {
+      "client_index": 0,
+      "round_number": 5,
+      "status": "dropped",
+      "effective_bandwidth": 376.43576381847674
+    },
+    {
+      "client_index": 0,
+      "round_number": 6,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 0,
+      "round_number": 7,
+      "status": "dropped",
+      "effective_bandwidth": 140.85596373698422
+    },
+    {
+      "client_index": 0,
+      "round_number": 8,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 0,
+      "round_number": 9,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 0,
+      "round_number": 10,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 0,
+      "round_number": 11,
+      "status": "dropped",
+      "effective_bandwidth": 1623.0619214544813
+    },
+    {
+      "client_index": 0,
+      "round_number": 12,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 0,
+      "round_number": 13,
+      "status": "dropped",
+      "effective_bandwidth": 372.46899184531543
+    },
+    {
+      "client_index": 0,
+      "round_number": 14,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 0,
+      "round_number": 15,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 0,
+      "round_number": 16,
+      "status": "dropped",
+      "effective_bandwidth": 1377.5183863403308
+    },
+    {
+      "client_index": 0,
+      "round_number": 17,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 0,
+      "round_number": 18,
+      "status": "dropped",
+      "effective_bandwidth": 324.2382391878178
+    },
+    {
+      "client_index": 0,
+      "round_number": 19,
+      "status": "dropped",
+      "effective_bandwidth": 266.4934437127532
+    },
+    {
+      "client_index": 0,
+      "round_number": 20,
+      "status": "dropped",
+      "effective_bandwidth": 173.34956620363823
+    },
+    {
+      "client_index": 0,
+      "round_number": 21,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 0,
+      "round_number": 22,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 0,
+      "round_number": 23,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 0,
+      "round_number": 24,
+      "status": "dropped",
+      "effective_bandwidth": 2020.8703299553408
+    },
+    {
+      "client_index": 0,
+      "round_number": 25,
+      "status": "dropped",
+      "effective_bandwidth": 1341.1444353389315
+    },
+    {
+      "client_index": 0,
+      "round_number": 26,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 0,
+      "round_number": 27,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 0,
+      "round_number": 28,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 0,
+      "round_number": 29,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 0,
+      "round_number": 30,
+      "status": "dropped",
+      "effective_bandwidth": 422.84315521539446
+    },
+    {
+      "client_index": 2,
+      "round_number": 1,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 2,
+      "round_number": 2,
+      "status": "dropped",
+      "effective_bandwidth": 1164.05949536546
+    },
+    {
+      "client_index": 2,
+      "round_number": 3,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 2,
+      "round_number": 4,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 2,
+      "round_number": 5,
+      "status": "dropped",
+      "effective_bandwidth": 1779.7844783757923
+    },
+    {
+      "client_index": 2,
+      "round_number": 6,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 2,
+      "round_number": 7,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 2,
+      "round_number": 8,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 2,
+      "round_number": 9,
+      "status": "dropped",
+      "effective_bandwidth": 2002.9881142157083
+    },
+    {
+      "client_index": 2,
+      "round_number": 10,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 2,
+      "round_number": 11,
+      "status": "dropped",
+      "effective_bandwidth": 1201.4560586193002
+    },
+    {
+      "client_index": 2,
+      "round_number": 12,
+      "status": "dropped",
+      "effective_bandwidth": 1662.6716035789163
+    },
+    {
+      "client_index": 2,
+      "round_number": 13,
+      "status": "dropped",
+      "effective_bandwidth": 1655.2829006668794
+    },
+    {
+      "client_index": 2,
+      "round_number": 14,
+      "status": "dropped",
+      "effective_bandwidth": 1354.011711303418
+    },
+    {
+      "client_index": 2,
+      "round_number": 15,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 2,
+      "round_number": 16,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 2,
+      "round_number": 17,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 2,
+      "round_number": 18,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 2,
+      "round_number": 19,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 2,
+      "round_number": 20,
+      "status": "dropped",
+      "effective_bandwidth": 1502.1078384154862
+    },
+    {
+      "client_index": 2,
+      "round_number": 21,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 2,
+      "round_number": 22,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 2,
+      "round_number": 23,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 2,
+      "round_number": 24,
+      "status": "dropped",
+      "effective_bandwidth": 1079.2317860407702
+    },
+    {
+      "client_index": 2,
+      "round_number": 25,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 2,
+      "round_number": 26,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 2,
+      "round_number": 27,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 2,
+      "round_number": 28,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 2,
+      "round_number": 29,
+      "status": "dropped",
+      "effective_bandwidth": 349.1228526831816
+    },
+    {
+      "client_index": 2,
+      "round_number": 30,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 8,
+      "round_number": 1,
+      "status": "dropped",
+      "effective_bandwidth": 280.77006100935023
+    },
+    {
+      "client_index": 8,
+      "round_number": 2,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 8,
+      "round_number": 3,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 8,
+      "round_number": 4,
+      "status": "dropped",
+      "effective_bandwidth": 488.5589097201723
+    },
+    {
+      "client_index": 8,
+      "round_number": 5,
+      "status": "dropped",
+      "effective_bandwidth": 1606.8039366762914
+    },
+    {
+      "client_index": 8,
+      "round_number": 6,
+      "status": "dropped",
+      "effective_bandwidth": 76.74799938824137
+    },
+    {
+      "client_index": 8,
+      "round_number": 7,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 8,
+      "round_number": 8,
+      "status": "dropped",
+      "effective_bandwidth": 413.6643555133246
+    },
+    {
+      "client_index": 8,
+      "round_number": 9,
+      "status": "dropped",
+      "effective_bandwidth": 493.96389571386726
+    },
+    {
+      "client_index": 8,
+      "round_number": 10,
+      "status": "dropped",
+      "effective_bandwidth": 401.29692862306746
+    },
+    {
+      "client_index": 8,
+      "round_number": 11,
+      "status": "dropped",
+      "effective_bandwidth": 295.4838893229801
+    },
+    {
+      "client_index": 8,
+      "round_number": 12,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 8,
+      "round_number": 13,
+      "status": "dropped",
+      "effective_bandwidth": 509.34578453409756
+    },
+    {
+      "client_index": 8,
+      "round_number": 14,
+      "status": "dropped",
+      "effective_bandwidth": 1877.2358509983687
+    },
+    {
+      "client_index": 8,
+      "round_number": 15,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 8,
+      "round_number": 16,
+      "status": "dropped",
+      "effective_bandwidth": 205.9212401089857
+    },
+    {
+      "client_index": 8,
+      "round_number": 17,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 8,
+      "round_number": 18,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 8,
+      "round_number": 19,
+      "status": "dropped",
+      "effective_bandwidth": 94.29151342596637
+    },
+    {
+      "client_index": 8,
+      "round_number": 20,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 8,
+      "round_number": 21,
+      "status": "dropped",
+      "effective_bandwidth": 88.93197609821925
+    },
+    {
+      "client_index": 8,
+      "round_number": 22,
+      "status": "dropped",
+      "effective_bandwidth": 301.47291755424305
+    },
+    {
+      "client_index": 8,
+      "round_number": 23,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 8,
+      "round_number": 24,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 8,
+      "round_number": 25,
+      "status": "dropped",
+      "effective_bandwidth": 245.8382989316071
+    },
+    {
+      "client_index": 8,
+      "round_number": 26,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 8,
+      "round_number": 27,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 8,
+      "round_number": 28,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 8,
+      "round_number": 29,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 8,
+      "round_number": 30,
+      "status": "dropped",
+      "effective_bandwidth": 261.6646281285595
+    },
+    {
+      "client_index": 4,
+      "round_number": 1,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 4,
+      "round_number": 2,
+      "status": "dropped",
+      "effective_bandwidth": 346.59655142207953
+    },
+    {
+      "client_index": 4,
+      "round_number": 3,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 4,
+      "round_number": 4,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 4,
+      "round_number": 5,
+      "status": "dropped",
+      "effective_bandwidth": 297.15709766808436
+    },
+    {
+      "client_index": 4,
+      "round_number": 6,
+      "status": "dropped",
+      "effective_bandwidth": 427.9466995897127
+    },
+    {
+      "client_index": 4,
+      "round_number": 7,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 4,
+      "round_number": 8,
+      "status": "dropped",
+      "effective_bandwidth": 131.0751283277819
+    },
+    {
+      "client_index": 4,
+      "round_number": 9,
+      "status": "dropped",
+      "effective_bandwidth": 490.47376350156077
+    },
+    {
+      "client_index": 4,
+      "round_number": 10,
+      "status": "dropped",
+      "effective_bandwidth": 301.0220701355979
+    },
+    {
+      "client_index": 4,
+      "round_number": 11,
+      "status": "dropped",
+      "effective_bandwidth": 1311.115155206809
+    },
+    {
+      "client_index": 4,
+      "round_number": 12,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 4,
+      "round_number": 13,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 4,
+      "round_number": 14,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 4,
+      "round_number": 15,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 4,
+      "round_number": 16,
+      "status": "dropped",
+      "effective_bandwidth": 378.9214069061959
+    },
+    {
+      "client_index": 4,
+      "round_number": 17,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 4,
+      "round_number": 18,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 4,
+      "round_number": 19,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 4,
+      "round_number": 20,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 4,
+      "round_number": 21,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 4,
+      "round_number": 22,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 4,
+      "round_number": 23,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 4,
+      "round_number": 24,
+      "status": "dropped",
+      "effective_bandwidth": 420.7628924731134
+    },
+    {
+      "client_index": 4,
+      "round_number": 25,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 4,
+      "round_number": 26,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 4,
+      "round_number": 27,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 4,
+      "round_number": 28,
+      "status": "dropped",
+      "effective_bandwidth": 201.1693267259488
+    },
+    {
+      "client_index": 4,
+      "round_number": 29,
+      "status": "dropped",
+      "effective_bandwidth": 403.7912541312095
+    },
+    {
+      "client_index": 4,
+      "round_number": 30,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 1,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 2,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 3,
+      "status": "dropped",
+      "effective_bandwidth": 250.368358068343
+    },
+    {
+      "client_index": 9,
+      "round_number": 4,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 5,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 6,
+      "status": "dropped",
+      "effective_bandwidth": 255.14464721294053
+    },
+    {
+      "client_index": 9,
+      "round_number": 7,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 8,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 9,
+      "status": "dropped",
+      "effective_bandwidth": 446.1850264635206
+    },
+    {
+      "client_index": 9,
+      "round_number": 10,
+      "status": "dropped",
+      "effective_bandwidth": 98.07411989959483
+    },
+    {
+      "client_index": 9,
+      "round_number": 11,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 12,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 13,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 14,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 15,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 16,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 17,
+      "status": "dropped",
+      "effective_bandwidth": 313.1937190684505
+    },
+    {
+      "client_index": 9,
+      "round_number": 18,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 19,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 20,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 21,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 22,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 23,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 24,
+      "status": "dropped",
+      "effective_bandwidth": 386.390941766051
+    },
+    {
+      "client_index": 9,
+      "round_number": 25,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 26,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 27,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 28,
+      "status": "dropped",
+      "effective_bandwidth": 409.30486226979633
+    },
+    {
+      "client_index": 9,
+      "round_number": 29,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 9,
+      "round_number": 30,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 3,
+      "round_number": 1,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 3,
+      "round_number": 2,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 3,
+      "round_number": 3,
+      "status": "dropped",
+      "effective_bandwidth": 1721.524123591841
+    },
+    {
+      "client_index": 3,
+      "round_number": 4,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 3,
+      "round_number": 5,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 3,
+      "round_number": 6,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 3,
+      "round_number": 7,
+      "status": "dropped",
+      "effective_bandwidth": 1550.5296212980597
+    },
+    {
+      "client_index": 3,
+      "round_number": 8,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 3,
+      "round_number": 9,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 3,
+      "round_number": 10,
+      "status": "dropped",
+      "effective_bandwidth": 361.4781564431535
+    },
+    {
+      "client_index": 3,
+      "round_number": 11,
+      "status": "dropped",
+      "effective_bandwidth": 230.46435491237764
+    },
+    {
+      "client_index": 3,
+      "round_number": 12,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 3,
+      "round_number": 13,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 3,
+      "round_number": 14,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 3,
+      "round_number": 15,
+      "status": "dropped",
+      "effective_bandwidth": 1810.9260018546634
+    },
+    {
+      "client_index": 3,
+      "round_number": 16,
+      "status": "dropped",
+      "effective_bandwidth": 1715.4954431262063
+    },
+    {
+      "client_index": 3,
+      "round_number": 17,
+      "status": "dropped",
+      "effective_bandwidth": 1780.4344396007837
+    },
+    {
+      "client_index": 3,
+      "round_number": 18,
+      "status": "dropped",
+      "effective_bandwidth": 1500.1935267445315
+    },
+    {
+      "client_index": 3,
+      "round_number": 19,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 3,
+      "round_number": 20,
+      "status": "dropped",
+      "effective_bandwidth": 430.0073090128325
+    },
+    {
+      "client_index": 3,
+      "round_number": 21,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 3,
+      "round_number": 22,
+      "status": "dropped",
+      "effective_bandwidth": 297.1195153657295
+    },
+    {
+      "client_index": 3,
+      "round_number": 23,
+      "status": "dropped",
+      "effective_bandwidth": 120.07413575008636
+    },
+    {
+      "client_index": 3,
+      "round_number": 24,
+      "status": "dropped",
+      "effective_bandwidth": 132.98985057698604
+    },
+    {
+      "client_index": 3,
+      "round_number": 25,
+      "status": "dropped",
+      "effective_bandwidth": 489.2334823467208
+    },
+    {
+      "client_index": 3,
+      "round_number": 26,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 3,
+      "round_number": 27,
+      "status": "dropped",
+      "effective_bandwidth": 467.32195268162616
+    },
+    {
+      "client_index": 3,
+      "round_number": 28,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 3,
+      "round_number": 29,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 3,
+      "round_number": 30,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 7,
+      "round_number": 1,
+      "status": "dropped",
+      "effective_bandwidth": 246.2708107177628
+    },
+    {
+      "client_index": 7,
+      "round_number": 2,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 7,
+      "round_number": 3,
+      "status": "dropped",
+      "effective_bandwidth": 68.97420676265536
+    },
+    {
+      "client_index": 7,
+      "round_number": 4,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 7,
+      "round_number": 5,
+      "status": "dropped",
+      "effective_bandwidth": 1403.7458594406808
+    },
+    {
+      "client_index": 7,
+      "round_number": 6,
+      "status": "dropped",
+      "effective_bandwidth": 1041.5535340682077
+    },
+    {
+      "client_index": 7,
+      "round_number": 7,
+      "status": "dropped",
+      "effective_bandwidth": 268.5952038461235
+    },
+    {
+      "client_index": 7,
+      "round_number": 8,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 7,
+      "round_number": 9,
+      "status": "dropped",
+      "effective_bandwidth": 431.3317336770433
+    },
+    {
+      "client_index": 7,
+      "round_number": 10,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 7,
+      "round_number": 11,
+      "status": "dropped",
+      "effective_bandwidth": 388.41466348389235
+    },
+    {
+      "client_index": 7,
+      "round_number": 12,
+      "status": "dropped",
+      "effective_bandwidth": 131.5681429411831
+    },
+    {
+      "client_index": 7,
+      "round_number": 13,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 7,
+      "round_number": 14,
+      "status": "dropped",
+      "effective_bandwidth": 208.96418453794394
+    },
+    {
+      "client_index": 7,
+      "round_number": 15,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 7,
+      "round_number": 16,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 7,
+      "round_number": 17,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 7,
+      "round_number": 18,
+      "status": "dropped",
+      "effective_bandwidth": 184.08827919946157
+    },
+    {
+      "client_index": 7,
+      "round_number": 19,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 7,
+      "round_number": 20,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 7,
+      "round_number": 21,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 7,
+      "round_number": 22,
+      "status": "dropped",
+      "effective_bandwidth": 369.7064805216287
+    },
+    {
+      "client_index": 7,
+      "round_number": 23,
+      "status": "dropped",
+      "effective_bandwidth": 75.10372659817264
+    },
+    {
+      "client_index": 7,
+      "round_number": 24,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 7,
+      "round_number": 25,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 7,
+      "round_number": 26,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 7,
+      "round_number": 27,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 7,
+      "round_number": 28,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 7,
+      "round_number": 29,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 7,
+      "round_number": 30,
+      "status": "dropped",
+      "effective_bandwidth": 281.329933741532
+    },
+    {
+      "client_index": 5,
+      "round_number": 1,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 5,
+      "round_number": 2,
+      "status": "dropped",
+      "effective_bandwidth": 1675.8693842284952
+    },
+    {
+      "client_index": 5,
+      "round_number": 3,
+      "status": "dropped",
+      "effective_bandwidth": 1968.6464424157734
+    },
+    {
+      "client_index": 5,
+      "round_number": 4,
+      "status": "dropped",
+      "effective_bandwidth": 321.9880923104829
+    },
+    {
+      "client_index": 5,
+      "round_number": 5,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 5,
+      "round_number": 6,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 5,
+      "round_number": 7,
+      "status": "dropped",
+      "effective_bandwidth": 1761.365999974902
+    },
+    {
+      "client_index": 5,
+      "round_number": 8,
+      "status": "dropped",
+      "effective_bandwidth": 309.452801315136
+    },
+    {
+      "client_index": 5,
+      "round_number": 9,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 5,
+      "round_number": 10,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 5,
+      "round_number": 11,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 5,
+      "round_number": 12,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 5,
+      "round_number": 13,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 5,
+      "round_number": 14,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 5,
+      "round_number": 15,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 5,
+      "round_number": 16,
+      "status": "dropped",
+      "effective_bandwidth": 163.8046902288816
+    },
+    {
+      "client_index": 5,
+      "round_number": 17,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 5,
+      "round_number": 18,
+      "status": "dropped",
+      "effective_bandwidth": 374.8454672661306
+    },
+    {
+      "client_index": 5,
+      "round_number": 19,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 5,
+      "round_number": 20,
+      "status": "dropped",
+      "effective_bandwidth": 181.97928852525345
+    },
+    {
+      "client_index": 5,
+      "round_number": 21,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 5,
+      "round_number": 22,
+      "status": "dropped",
+      "effective_bandwidth": 2048.0
+    },
+    {
+      "client_index": 5,
+      "round_number": 23,
+      "status": "dropped",
+      "effective_bandwidth": 323.30228725115717
+    },
+    {
+      "client_index": 5,
+      "round_number": 24,
+      "status": "dropped",
+      "effective_bandwidth": 119.02610141926559
+    },
+    {
+      "client_index": 5,
+      "round_number": 25,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 5,
+      "round_number": 26,
+      "status": "dropped",
+      "effective_bandwidth": 461.75021401788524
+    },
+    {
+      "client_index": 5,
+      "round_number": 27,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 5,
+      "round_number": 28,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 5,
+      "round_number": 29,
+      "status": "dropped",
+      "effective_bandwidth": 0.0
+    },
+    {
+      "client_index": 5,
+      "round_number": 30,
+      "status": "dropped",
+      "effective_bandwidth": 484.37291561937366
+    }
+  ],
+  "elapsed_seconds": 14389.660736083984,
+  "configuration": {
+    "compression": {
+      "name": "none",
+      "method": "none",
+      "topk_ratio": 0.01,
+      "quant_bits": null
+    },
+    "connectivity": {
+      "name": "bw_uncapped_topk1pct",
+      "bandwidth_kbps": 2048.0,
+      "dropout_rate": 0.0
+    },
+    "bandwidth_kbps": 2048.0,
+    "dropout_rate": 0.0
+  }
+}

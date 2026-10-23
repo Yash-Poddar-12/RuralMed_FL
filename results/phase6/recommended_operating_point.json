@@ -1,0 +1,12 @@
+{
+  "strategy": "fedbuff",
+  "compression": "topk_1pct",
+  "bandwidth_kbps": 256.0,
+  "dropout_rate": 0.5,
+  "macro_auroc_mean": 0.9256296539149281,
+  "macro_auroc_std": 0.0,
+  "macro_f1_mean": 0.8432420139726574,
+  "accuracy_mean": 0.8166701747000631,
+  "seeds": 1,
+  "justification": "Highest mean macro-AUROC among compressed points with at least 1 seed(s); standard deviation is reported for uncertainty."
+}
