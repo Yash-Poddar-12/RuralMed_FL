@@ -1,0 +1,523 @@
+{
+  "run_label": "fedbuff_topk_1pct_severe_dropout_seed42",
+  "seed": 42,
+  "strategy": "fedbuff",
+  "buffer_size": 3,
+  "bandwidth_cap_kbps": 256,
+  "payload_bytes": 11534336,
+  "round_budget_seconds": 60,
+  "final_metrics": {
+    "test_accuracy": 0.8166701747000631,
+    "test_macro_auroc": 0.9256296539149281,
+    "test_macro_f1": 0.8432420139726574,
+    "test_covid_19_sensitivity": 0.9899791231732776,
+    "test_covid_19_f1": 0.9825942809780357,
+    "test_loss": 0.4522156987948509
+  },
+  "rounds": [
+    {
+      "round_number": 1,
+      "test_accuracy": 0.2939381182908861,
+      "test_macro_auroc": 0.46611568771327394,
+      "test_macro_f1": 0.15144367629117528,
+      "test_covid_19_sensitivity": 0.0,
+      "test_covid_19_f1": 0.0,
+      "test_loss": 1.4728508426675895
+    },
+    {
+      "round_number": 2,
+      "test_accuracy": 0.6928541359713745,
+      "test_macro_auroc": 0.8899153037510817,
+      "test_macro_f1": 0.7286157829726198,
+      "test_covid_19_sensitivity": 0.9899791231732776,
+      "test_covid_19_f1": 0.8726536621273463,
+      "test_loss": 0.5460065390481068
+    },
+    {
+      "round_number": 3,
+      "test_accuracy": 0.8011471269206483,
+      "test_macro_auroc": 0.9096318905533459,
+      "test_macro_f1": 0.8272241932991306,
+      "test_covid_19_sensitivity": 0.9903966597077244,
+      "test_covid_19_f1": 0.9765335529024289,
+      "test_loss": 0.4563374505547869
+    },
+    {
+      "round_number": 4,
+      "test_accuracy": 0.8041464954746369,
+      "test_macro_auroc": 0.9123587783652732,
+      "test_macro_f1": 0.8189119395532841,
+      "test_covid_19_sensitivity": 0.8872651356993737,
+      "test_covid_19_f1": 0.935093509350935,
+      "test_loss": 0.5124034810583106
+    },
+    {
+      "round_number": 5,
+      "test_accuracy": 0.7982003788676069,
+      "test_macro_auroc": 0.9078800559923255,
+      "test_macro_f1": 0.808627221292216,
+      "test_covid_19_sensitivity": 0.9895615866388309,
+      "test_covid_19_f1": 0.9111880046136102,
+      "test_loss": 0.49623674446596544
+    },
+    {
+      "round_number": 6,
+      "test_accuracy": 0.7930435697747843,
+      "test_macro_auroc": 0.9089119950093286,
+      "test_macro_f1": 0.80487361227607,
+      "test_covid_19_sensitivity": 0.8154488517745303,
+      "test_covid_19_f1": 0.8934126258005489,
+      "test_loss": 0.5816975418980863
+    },
+    {
+      "round_number": 7,
+      "test_accuracy": 0.7765207324773732,
+      "test_macro_auroc": 0.9065525162918936,
+      "test_macro_f1": 0.7956864071269677,
+      "test_covid_19_sensitivity": 0.837160751565762,
+      "test_covid_19_f1": 0.9017315043849786,
+      "test_loss": 0.5675955308635369
+    },
+    {
+      "round_number": 8,
+      "test_accuracy": 0.7860450431488107,
+      "test_macro_auroc": 0.9136411606816575,
+      "test_macro_f1": 0.8200631733121811,
+      "test_covid_19_sensitivity": 0.9657620041753654,
+      "test_covid_19_f1": 0.9734848484848485,
+      "test_loss": 0.4713353566485088
+    },
+    {
+      "round_number": 9,
+      "test_accuracy": 0.7924121237634182,
+      "test_macro_auroc": 0.9202297693183287,
+      "test_macro_f1": 0.8251669430082065,
+      "test_covid_19_sensitivity": 0.9515657620041754,
+      "test_covid_19_f1": 0.9712337523971873,
+      "test_loss": 0.44744770094310077
+    },
+    {
+      "round_number": 10,
+      "test_accuracy": 0.7943590822984635,
+      "test_macro_auroc": 0.9248107650276151,
+      "test_macro_f1": 0.8277988078581648,
+      "test_covid_19_sensitivity": 0.9949895615866389,
+      "test_covid_19_f1": 0.9756397134083931,
+      "test_loss": 0.44752103099068247
+    },
+    {
+      "round_number": 11,
+      "test_accuracy": 0.7665754577983582,
+      "test_macro_auroc": 0.9177368034261928,
+      "test_macro_f1": 0.7976556691423037,
+      "test_covid_19_sensitivity": 0.8718162839248434,
+      "test_covid_19_f1": 0.928,
+      "test_loss": 0.5062498341257059
+    },
+    {
+      "round_number": 12,
+      "test_accuracy": 0.8153020416754367,
+      "test_macro_auroc": 0.9270117382203676,
+      "test_macro_f1": 0.842161244402276,
+      "test_covid_19_sensitivity": 0.9937369519832986,
+      "test_covid_19_f1": 0.9828618624819326,
+      "test_loss": 0.41384876934861264
+    },
+    {
+      "round_number": 13,
+      "test_accuracy": 0.794832666806988,
+      "test_macro_auroc": 0.9254989474720926,
+      "test_macro_f1": 0.8284714952668262,
+      "test_covid_19_sensitivity": 0.9891440501043841,
+      "test_covid_19_f1": 0.9742957022414148,
+      "test_loss": 0.42368344698823446
+    },
+    {
+      "round_number": 14,
+      "test_accuracy": 0.791412334245422,
+      "test_macro_auroc": 0.9261494138517463,
+      "test_macro_f1": 0.8265846604126129,
+      "test_covid_19_sensitivity": 0.9816283924843424,
+      "test_covid_19_f1": 0.9777500519858598,
+      "test_loss": 0.425240594960343
+    },
+    {
+      "round_number": 15,
+      "test_accuracy": 0.7916754367501578,
+      "test_macro_auroc": 0.922547828894129,
+      "test_macro_f1": 0.8235786358590721,
+      "test_covid_19_sensitivity": 0.9937369519832986,
+      "test_covid_19_f1": 0.967479674796748,
+      "test_loss": 0.438941146130061
+    },
+    {
+      "round_number": 16,
+      "test_accuracy": 0.8123026731214481,
+      "test_macro_auroc": 0.9290716435771734,
+      "test_macro_f1": 0.838315613519223,
+      "test_covid_19_sensitivity": 0.9803757828810021,
+      "test_covid_19_f1": 0.9736678415923699,
+      "test_loss": 0.4283095108875599
+    },
+    {
+      "round_number": 17,
+      "test_accuracy": 0.811355504104399,
+      "test_macro_auroc": 0.9214776724333266,
+      "test_macro_f1": 0.8370661573582264,
+      "test_covid_19_sensitivity": 0.9941544885177453,
+      "test_covid_19_f1": 0.972233564720294,
+      "test_loss": 0.4663308496488769
+    },
+    {
+      "round_number": 18,
+      "test_accuracy": 0.7781519680067355,
+      "test_macro_auroc": 0.9176003457759435,
+      "test_macro_f1": 0.8018587034511904,
+      "test_covid_19_sensitivity": 0.998329853862213,
+      "test_covid_19_f1": 0.9220979560354802,
+      "test_loss": 0.5411557097343163
+    },
+    {
+      "round_number": 19,
+      "test_accuracy": 0.831877499473795,
+      "test_macro_auroc": 0.925906400717853,
+      "test_macro_f1": 0.8495210489285275,
+      "test_covid_19_sensitivity": 0.9979123173277662,
+      "test_covid_19_f1": 0.9795081967213115,
+      "test_loss": 0.4743014090727616
+    },
+    {
+      "round_number": 20,
+      "test_accuracy": 0.7923595032624711,
+      "test_macro_auroc": 0.9244289457765508,
+      "test_macro_f1": 0.8226366507435438,
+      "test_covid_19_sensitivity": 0.9177453027139875,
+      "test_covid_19_f1": 0.9562758320643898,
+      "test_loss": 0.4613145958546763
+    },
+    {
+      "round_number": 21,
+      "test_accuracy": 0.7817301620711429,
+      "test_macro_auroc": 0.9241133954542433,
+      "test_macro_f1": 0.8142526221160163,
+      "test_covid_19_sensitivity": 0.9039665970772442,
+      "test_covid_19_f1": 0.9491451117930733,
+      "test_loss": 0.481189621872361
+    },
+    {
+      "round_number": 22,
+      "test_accuracy": 0.8204062302673122,
+      "test_macro_auroc": 0.9258034703739527,
+      "test_macro_f1": 0.8434471533322091,
+      "test_covid_19_sensitivity": 0.9954070981210856,
+      "test_covid_19_f1": 0.9770491803278688,
+      "test_loss": 0.5156613191951578
+    },
+    {
+      "round_number": 23,
+      "test_accuracy": 0.825668280362029,
+      "test_macro_auroc": 0.9277203559468776,
+      "test_macro_f1": 0.8490247238202221,
+      "test_covid_19_sensitivity": 0.9762004175365344,
+      "test_covid_19_f1": 0.9833859095688748,
+      "test_loss": 0.45739992451251266
+    },
+    {
+      "round_number": 24,
+      "test_accuracy": 0.8115659861081878,
+      "test_macro_auroc": 0.9248681381673562,
+      "test_macro_f1": 0.8391603123993759,
+      "test_covid_19_sensitivity": 0.962839248434238,
+      "test_covid_19_f1": 0.9785699130065776,
+      "test_loss": 0.4381141909748046
+    },
+    {
+      "round_number": 25,
+      "test_accuracy": 0.8193538202483688,
+      "test_macro_auroc": 0.9285667775845888,
+      "test_macro_f1": 0.8468190121885822,
+      "test_covid_19_sensitivity": 0.9807933194154489,
+      "test_covid_19_f1": 0.987389659520807,
+      "test_loss": 0.47180809674953517
+    },
+    {
+      "round_number": 26,
+      "test_accuracy": 0.8166701747000631,
+      "test_macro_auroc": 0.9256296539149281,
+      "test_macro_f1": 0.8432420139726574,
+      "test_covid_19_sensitivity": 0.9899791231732776,
+      "test_covid_19_f1": 0.9825942809780357,
+      "test_loss": 0.4522156987948509
+    }
+  ],
+  "communication_rounds": [
+    {
+      "round": 1,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 2,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 3,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 4,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 5,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 6,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 7,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 8,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 9,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 10,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 11,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 12,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 13,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 14,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 15,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 16,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 17,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 18,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 19,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 20,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 21,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 22,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 23,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 24,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    },
+    {
+      "round": 25,
+      "num_clients": 10,
+      "download_bytes": 278277240,
+      "upload_bytes": 278277240,
+      "round_bytes": 556554480,
+      "baseline_round_bytes": 556554480
+    }
+  ],
+  "communication": {
+    "comms/model_bytes": 27827724,
+    "comms/total_gb": 13.913862,
+    "comms/total_download_gb": 6.956931,
+    "comms/total_upload_gb": 6.956931,
+    "comms/baseline_total_gb": 13.913862,
+    "comms/compression_ratio": 1.0,
+    "comms/rounds_completed": 25,
+    "comms/avg_gb_per_round": 0.55655448
+  },
+  "client_connectivity": {
+    "run_label": "bw_256kbps_topk1pct",
+    "bw_cap_kbps": 256.0,
+    "payload_bytes": 11534336,
+    "round_budget_s": 300,
+    "uptime/client_08": 0.56,
+    "uptime/client_09": 0.19999999999999996,
+    "uptime/client_07": 0.43999999999999995,
+    "uptime/client_02": 0.88,
+    "uptime/client_03": 0.84,
+    "uptime/client_00": 1.0,
+    "uptime/client_04": 0.28,
+    "uptime/client_05": 0.28,
+    "uptime/client_01": 0.4,
+    "uptime/client_06": 0.6799999999999999,
+    "avg_bw_kbps/client_08": 1489.3487305905576,
+    "avg_bw_kbps/client_09": 1208.0643058649027,
+    "avg_bw_kbps/client_07": 1584.009635335722,
+    "avg_bw_kbps/client_02": 2695.5674386389246,
+    "avg_bw_kbps/client_03": 2313.4510296140634,
+    "avg_bw_kbps/client_00": 2432.6610468131253,
+    "avg_bw_kbps/client_04": 1712.5162267408548,
+    "avg_bw_kbps/client_05": 1374.8866798910037,
+    "avg_bw_kbps/client_01": 1854.7063266266953,
+    "avg_bw_kbps/client_06": 2390.0897903825266,
+    "connectivity/uptime_client_00": 1.0,
+    "connectivity/uptime_client_01": 0.56,
+    "connectivity/uptime_client_02": 0.96,
+    "connectivity/uptime_client_03": 0.92,
+    "connectivity/uptime_client_04": 0.48,
+    "connectivity/uptime_client_05": 0.36,
+    "connectivity/uptime_client_06": 0.8,
+    "connectivity/uptime_client_07": 0.6,
+    "connectivity/uptime_client_08": 0.92,
+    "connectivity/uptime_client_09": 0.36
+  },
+  "client_events": [],
+  "elapsed_seconds": 11734.588,
+  "configuration": {
+    "run_label": "fedbuff_topk_1pct_severe_dropout_seed42",
+    "seed": 42,
+    "strategy": "fedbuff",
+    "compression": {
+      "name": "topk_1pct",
+      "method": "topk",
+      "topk_ratio": 0.01,
+      "payload_bytes": 11534336
+    },
+    "connectivity": {
+      "name": "severe_dropout",
+      "dropout_rate": 0.5,
+      "bandwidth_kbps": 256,
+      "round_budget_seconds": 60
+    },
+    "dropout_rate": 0.5,
+    "bandwidth_kbps": 256,
+    "buffer_size": 3
+  }
+}

@@ -1,0 +1,278 @@
+{
+  "run_label": "fedbuff_topk_1pct_moderate_dropout_seed42",
+  "seed": 42,
+  "strategy": "fedbuff",
+  "buffer_size": 3,
+  "bandwidth_cap_kbps": 512,
+  "payload_bytes": 11534336,
+  "round_budget_seconds": 120,
+  "final_metrics": {
+    "test_accuracy": 0.7980951378657125,
+    "test_macro_auroc": 0.9131133776587627,
+    "test_macro_f1": 0.8125536751771553,
+    "test_covid_19_sensitivity": 0.8342379958246346,
+    "test_covid_19_f1": 0.9090081892629663,
+    "test_loss": 0.5923544505199014
+  },
+  "rounds": [
+    {
+      "round_number": 1,
+      "test_accuracy": 0.2939381182908861,
+      "test_macro_auroc": 0.46611568771327394,
+      "test_macro_f1": 0.15144367629117528,
+      "test_covid_19_sensitivity": 0.0,
+      "test_covid_19_f1": 0.0,
+      "test_loss": 1.4728508426675895
+    },
+    {
+      "round_number": 2,
+      "test_accuracy": 0.6283414018101452,
+      "test_macro_auroc": 0.7742708530864751,
+      "test_macro_f1": 0.44086388024021356,
+      "test_covid_19_sensitivity": 0.0,
+      "test_covid_19_f1": 0.0,
+      "test_loss": 1.546856424490343
+    },
+    {
+      "round_number": 3,
+      "test_accuracy": 0.6000841928015155,
+      "test_macro_auroc": 0.8818582025928889,
+      "test_macro_f1": 0.529361462528239,
+      "test_covid_19_sensitivity": 0.21294363256784968,
+      "test_covid_19_f1": 0.35111876075731496,
+      "test_loss": 0.8442053870887812
+    },
+    {
+      "round_number": 4,
+      "test_accuracy": 0.7176910124184382,
+      "test_macro_auroc": 0.8901590962379492,
+      "test_macro_f1": 0.7434242763180888,
+      "test_covid_19_sensitivity": 0.7887265135699374,
+      "test_covid_19_f1": 0.8455684870188004,
+      "test_loss": 0.6268926445646452
+    },
+    {
+      "round_number": 5,
+      "test_accuracy": 0.8120921911176594,
+      "test_macro_auroc": 0.9143184734693052,
+      "test_macro_f1": 0.8315180233973098,
+      "test_covid_19_sensitivity": 0.9791231732776617,
+      "test_covid_19_f1": 0.9688080975005164,
+      "test_loss": 0.46014521343285
+    },
+    {
+      "round_number": 6,
+      "test_accuracy": 0.8099347505788255,
+      "test_macro_auroc": 0.9184822206687296,
+      "test_macro_f1": 0.8349431507149135,
+      "test_covid_19_sensitivity": 0.9874739039665971,
+      "test_covid_19_f1": 0.9710531718332991,
+      "test_loss": 0.47499263854911017
+    },
+    {
+      "round_number": 7,
+      "test_accuracy": 0.8067249000210482,
+      "test_macro_auroc": 0.9177780972078363,
+      "test_macro_f1": 0.8314463771241324,
+      "test_covid_19_sensitivity": 0.9736951983298539,
+      "test_covid_19_f1": 0.9614512471655329,
+      "test_loss": 0.4674945380330914
+    },
+    {
+      "round_number": 8,
+      "test_accuracy": 0.7930435697747843,
+      "test_macro_auroc": 0.9178110141035513,
+      "test_macro_f1": 0.8214924573312076,
+      "test_covid_19_sensitivity": 0.9949895615866389,
+      "test_covid_19_f1": 0.9628282828282828,
+      "test_loss": 0.45162918207093905
+    },
+    {
+      "round_number": 9,
+      "test_accuracy": 0.7870974531677541,
+      "test_macro_auroc": 0.9176714431283647,
+      "test_macro_f1": 0.8133907638611494,
+      "test_covid_19_sensitivity": 0.8997912317327766,
+      "test_covid_19_f1": 0.9394071490845685,
+      "test_loss": 0.509929877448097
+    },
+    {
+      "round_number": 10,
+      "test_accuracy": 0.8021995369395917,
+      "test_macro_auroc": 0.9197181063681436,
+      "test_macro_f1": 0.8230452476365753,
+      "test_covid_19_sensitivity": 0.8847599164926931,
+      "test_covid_19_f1": 0.935747405608302,
+      "test_loss": 0.49498147443579865
+    },
+    {
+      "round_number": 11,
+      "test_accuracy": 0.7909913702378447,
+      "test_macro_auroc": 0.9229640143911647,
+      "test_macro_f1": 0.8222916592705504,
+      "test_covid_19_sensitivity": 0.9824634655532359,
+      "test_covid_19_f1": 0.9619787408013083,
+      "test_loss": 0.4354516447556443
+    },
+    {
+      "round_number": 12,
+      "test_accuracy": 0.8215112607872027,
+      "test_macro_auroc": 0.9272494911496976,
+      "test_macro_f1": 0.8447640912407918,
+      "test_covid_19_sensitivity": 0.984133611691023,
+      "test_covid_19_f1": 0.980653214062825,
+      "test_loss": 0.4158619671677369
+    },
+    {
+      "round_number": 13,
+      "test_accuracy": 0.7547358450852452,
+      "test_macro_auroc": 0.9217586614257828,
+      "test_macro_f1": 0.8007288937657951,
+      "test_covid_19_sensitivity": 0.9603340292275574,
+      "test_covid_19_f1": 0.9688289806234204,
+      "test_loss": 0.45619851408494544
+    },
+    {
+      "round_number": 14,
+      "test_accuracy": 0.7863081456535467,
+      "test_macro_auroc": 0.9249449028575358,
+      "test_macro_f1": 0.8218321480724918,
+      "test_covid_19_sensitivity": 0.954070981210856,
+      "test_covid_19_f1": 0.9688361246555014,
+      "test_loss": 0.4621449435944056
+    },
+    {
+      "round_number": 15,
+      "test_accuracy": 0.7938328772889918,
+      "test_macro_auroc": 0.924525253590679,
+      "test_macro_f1": 0.8253872999572339,
+      "test_covid_19_sensitivity": 0.9494780793319415,
+      "test_covid_19_f1": 0.9662205226258763,
+      "test_loss": 0.4498942697381903
+    },
+    {
+      "round_number": 16,
+      "test_accuracy": 0.7766259734792675,
+      "test_macro_auroc": 0.9135249591500889,
+      "test_macro_f1": 0.8089990852791997,
+      "test_covid_19_sensitivity": 0.9139874739039666,
+      "test_covid_19_f1": 0.9488513220632857,
+      "test_loss": 0.4960966668638825
+    },
+    {
+      "round_number": 17,
+      "test_accuracy": 0.7842033256156599,
+      "test_macro_auroc": 0.9267348807486376,
+      "test_macro_f1": 0.8227822423601318,
+      "test_covid_19_sensitivity": 0.9749478079331941,
+      "test_covid_19_f1": 0.9804744908671006,
+      "test_loss": 0.4513424860756163
+    },
+    {
+      "round_number": 18,
+      "test_accuracy": 0.8236160808250894,
+      "test_macro_auroc": 0.9257844472016301,
+      "test_macro_f1": 0.8418339811919106,
+      "test_covid_19_sensitivity": 0.9966597077244259,
+      "test_covid_19_f1": 0.9685534591194969,
+      "test_loss": 0.41849018154433343
+    },
+    {
+      "round_number": 19,
+      "test_accuracy": 0.7958324563249842,
+      "test_macro_auroc": 0.9195279113912891,
+      "test_macro_f1": 0.826436133663713,
+      "test_covid_19_sensitivity": 0.9515657620041754,
+      "test_covid_19_f1": 0.9724770642201835,
+      "test_loss": 0.4672884679021295
+    },
+    {
+      "round_number": 20,
+      "test_accuracy": 0.8204588507682593,
+      "test_macro_auroc": 0.924390054366909,
+      "test_macro_f1": 0.8454526298818407,
+      "test_covid_19_sensitivity": 0.9866388308977035,
+      "test_covid_19_f1": 0.9860212810348424,
+      "test_loss": 0.46273597416890794
+    },
+    {
+      "round_number": 21,
+      "test_accuracy": 0.8148284571669122,
+      "test_macro_auroc": 0.9249042867720777,
+      "test_macro_f1": 0.8415539452529933,
+      "test_covid_19_sensitivity": 0.9824634655532359,
+      "test_covid_19_f1": 0.9822584011688583,
+      "test_loss": 0.44751133112198827
+    },
+    {
+      "round_number": 22,
+      "test_accuracy": 0.7750999789517996,
+      "test_macro_auroc": 0.9129582343069522,
+      "test_macro_f1": 0.8104720221360062,
+      "test_covid_19_sensitivity": 0.9365344467640918,
+      "test_covid_19_f1": 0.9628675681476712,
+      "test_loss": 0.5265205312191725
+    },
+    {
+      "round_number": 23,
+      "test_accuracy": 0.8156177646811198,
+      "test_macro_auroc": 0.9170608126134554,
+      "test_macro_f1": 0.8344376685576829,
+      "test_covid_19_sensitivity": 0.9979123173277662,
+      "test_covid_19_f1": 0.9693774082336241,
+      "test_loss": 0.5050556490394197
+    },
+    {
+      "round_number": 24,
+      "test_accuracy": 0.8125131551252368,
+      "test_macro_auroc": 0.921128825577408,
+      "test_macro_f1": 0.8385022757402503,
+      "test_covid_19_sensitivity": 0.9874739039665971,
+      "test_covid_19_f1": 0.9809207797594359,
+      "test_loss": 0.45425947950504075
+    },
+    {
+      "round_number": 25,
+      "test_accuracy": 0.7798358240370449,
+      "test_macro_auroc": 0.9212719864842004,
+      "test_macro_f1": 0.8191776283223341,
+      "test_covid_19_sensitivity": 0.9866388308977035,
+      "test_covid_19_f1": 0.9809049398090494,
+      "test_loss": 0.4763298022624092
+    },
+    {
+      "round_number": 26,
+      "test_accuracy": 0.7980951378657125,
+      "test_macro_auroc": 0.9131133776587627,
+      "test_macro_f1": 0.8125536751771553,
+      "test_covid_19_sensitivity": 0.8342379958246346,
+      "test_covid_19_f1": 0.9090081892629663,
+      "test_loss": 0.5923544505199014
+    }
+  ],
+  "communication_rounds": [],
+  "communication": {},
+  "client_connectivity": {},
+  "client_events": [],
+  "elapsed_seconds": 12159.342,
+  "configuration": {
+    "run_label": "fedbuff_topk_1pct_moderate_dropout_seed42",
+    "seed": 42,
+    "strategy": "fedbuff",
+    "compression": {
+      "name": "topk_1pct",
+      "method": "topk",
+      "topk_ratio": 0.01,
+      "payload_bytes": 11534336
+    },
+    "connectivity": {
+      "name": "moderate_dropout",
+      "dropout_rate": 0.25,
+      "bandwidth_kbps": 512,
+      "round_budget_seconds": 120
+    },
+    "dropout_rate": 0.25,
+    "bandwidth_kbps": 512,
+    "buffer_size": 3
+  }
+}

@@ -44,6 +44,7 @@ research/data/dev_sample/
 *.tar
 *.gz
 !infra/docs/reports/**/*.png
+!results/**/*.png
 !research/data/partitions/full/*/distribution.png
 
 # Secrets and local configuration.
