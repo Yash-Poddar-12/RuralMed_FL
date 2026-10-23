@@ -23,11 +23,19 @@ def summarize_results(results: list[dict[str, Any]]) -> pd.DataFrame:
     for result in results:
         config = result.get("configuration", {})
         final = result.get("final_metrics", {})
+        comp = config.get("compression", {})
+        comp_name = comp.get("name", "unknown")
+        if comp_name == "topk" or "topk" in comp_name:
+            ratio = comp.get("topk_ratio")
+            if ratio == 0.01 or "1pct" in result.get("run_label", ""):
+                comp_name = "topk_1pct"
+            elif ratio == 0.10 or "10pct" in result.get("run_label", ""):
+                comp_name = "topk_10pct"
         rows.append({
             "run_label": result["run_label"],
             "seed": result.get("seed"),
             "strategy": result.get("strategy", "fedbuff"),
-            "compression": config.get("compression", {}).get("name", "unknown"),
+            "compression": comp_name,
             "bandwidth_kbps": config.get("bandwidth_kbps"),
             "dropout_rate": config.get("dropout_rate", 0.0),
             **{metric: final.get(metric, np.nan) for metric in METRICS},
@@ -67,9 +75,10 @@ def recommend_operating_point(summary: pd.DataFrame, min_seeds: int = 1) -> dict
     candidates = candidates[candidates["seeds"] >= req_seeds]
     if candidates.empty:
         raise ValueError(f"At least {req_seeds} seeds are required for a recommendation")
-    # Prefer a non-baseline compressed point, then maximize AUROC and F1.
+    # Prefer a FedBuff compressed point, then any compressed point, then maximize AUROC and F1.
+    fedbuff_compressed = candidates[(candidates["compression"] != "none") & (candidates["strategy"] == "fedbuff")]
     compressed = candidates[candidates["compression"] != "none"]
-    pool = compressed if not compressed.empty else candidates
+    pool = fedbuff_compressed if not fedbuff_compressed.empty else (compressed if not compressed.empty else candidates)
     best = pool.sort_values(
         ["test_macro_auroc_mean", "test_macro_f1_mean", "bandwidth_score"],
         ascending=[False, False, True],
