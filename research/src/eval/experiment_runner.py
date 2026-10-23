@@ -192,6 +192,7 @@ def run_sweep(
             record["log_path"] = str(log_path)
             if returncode == 0 and result_path.exists():
                 result = json.loads(result_path.read_text(encoding="utf-8"))
+                result["run_label"] = spec["run_label"]
                 result["configuration"] = spec
                 result_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
             elif returncode != 0:
